@@ -1,114 +1,133 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+
+// ==================================
+//      SVG VISUAL COMPONENTS
+// ==================================
+
+const RevenueVisual = () => (
+    <svg viewBox="0 0 400 300" className="w-full h-full">
+      <defs>
+        <linearGradient id="revenueGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" style={{ stopColor: 'hsl(var(--primary))', stopOpacity: 0.4 }} />
+          <stop offset="100%" style={{ stopColor: 'hsl(var(--primary))', stopOpacity: 0 }} />
+        </linearGradient>
+      </defs>
+      <path d="M50,250 C150,50 250,150 350,80" fill="url(#revenueGradient)" stroke="hsl(var(--primary))" strokeWidth="3" className="animate-draw" />
+    </svg>
+);
+
+const CashflowVisual = () => (
+    <svg viewBox="0 0 400 300" className="w-full h-full">
+        <rect x="150" y="100" width="100" height="100" fill="hsl(var(--card))" stroke="hsl(var(--border))" strokeWidth="2" rx="10"/>
+        <text x="175" y="155" fill="hsl(var(--foreground))" className="fade-in-element text-lg" style={{ animationDelay: '2s' }}>Balance</text>
+        <path d="M50,125 H150 L140,115 M150,125 L140,135" fill="none" stroke="hsl(142 71% 45%)" strokeWidth="3" className="animate-draw" />
+        <path d="M350,175 H250 L260,165 M250,175 L260,185" fill="none" stroke="hsl(0 84% 60%)" strokeWidth="3" className="animate-draw" style={{ animationDelay: '0.5s' }}/>
+    </svg>
+);
+
+const ForecastingVisual = () => (
+    <svg viewBox="0 0 400 300" className="w-full h-full">
+        <text x="120" y="110" fill="hsl(var(--foreground))" className="text-2xl fade-in-element">Runway Forecast</text>
+        <rect x="50" y="140" width="300" height="20" fill="hsl(var(--muted))" rx="10" />
+        <rect x="50" y="140" width="220" height="20" fill="hsl(var(--primary))" rx="10" className="fade-in-element" style={{ animationDelay: '0.5s', transformOrigin: 'left', animation: 'scale-x 1.5s ease-out forwards' }} />
+        <text x="160" y="195" fill="hsl(var(--foreground))" className="text-xl fade-in-element" style={{ animationDelay: '1.5s' }}>18 Months</text>
+    </svg>
+);
+
+const features = [
+  { id: 'revenue', title: 'Real-Time Revenue Tracking', description: 'Forget static reports. Connect your Stripe account in seconds and get an instant, live view of your MRR, ARR, and new subscription growth.', visual: <RevenueVisual /> },
+  { id: 'cashflow', title: 'Automated Cash Flow', description: 'Link your bank accounts to see a clear, automated picture of your cash in, cash out, and net burn. No more manual entry, no more guesswork.', visual: <CashflowVisual /> },
+  { id: 'forecasting', title: 'Intelligent Runway Forecasting', description: 'Stop wondering how long your cash will last. Our tool analyzes your real-time data to give you an accurate, up-to-the-minute runway forecast.', visual: <ForecastingVisual /> }
+];
+
+// ==================================
+//      MAIN APP COMPONENT
+// ==================================
 
 function App() {
-  // This hook handles the scroll animations
-  useEffect(() => {
-    const animatedElements = document.querySelectorAll('.fade-in-up');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-visible');
-        }
-      });
-    }, { threshold: 0.1 });
+  const [activeFeature, setActiveFeature] = useState(features[0].id);
 
-    animatedElements.forEach(element => observer.observe(element));
-    return () => animatedElements.forEach(element => observer.unobserve(element));
+  useEffect(() => {
+    const featureDivs = document.querySelectorAll('[data-feature]');
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && entry.intersectionRatio >= 0.6) {
+            setActiveFeature(entry.target.getAttribute('data-feature'));
+          }
+        });
+      }, { rootMargin: "0px 0px -40% 0px", threshold: 0.6 }
+    );
+    featureDivs.forEach((div) => observer.observe(div));
+    return () => featureDivs.forEach((div) => observer.unobserve(div));
   }, []);
 
   return (
-    <div id="app" className="container mx-auto px-6 py-4">
-      {/* ============== HEADER ============== */}
-      <header className="flex justify-between items-center py-4">
-        <div className="text-xl font-bold">[Your Logo]</div>
-        <nav className="hidden md:flex items-center space-x-8">
-          <a href="#features" className="text-brand-muted hover:text-brand-light transition-colors">Features</a>
-          <a href="#pricing" className="text-brand-muted hover:text-brand-light transition-colors">Pricing</a>
-          <a href="#login" className="text-brand-muted hover:text-brand-light transition-colors">Login</a>
-        </nav>
-        <a href="#cta" className="bg-brand-accent text-brand-dark font-bold py-2 px-4 rounded-md hover:bg-opacity-90 transition-transform hover:scale-105">
-          Sign Up Now
-        </a>
-      </header>
-
-      <main className="mt-16 md:mt-24">
-        {/* ============== CHAPTER 1: THE HOOK (HERO) ============== */}
-        <section id="hero" className="text-center max-w-3xl mx-auto fade-in-up">
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight">Finance for Founders Who'd Rather Be Building.</h1>
-          <p className="mt-6 text-lg md:text-xl text-brand-muted max-w-2xl mx-auto">Stop wrestling with spreadsheets. We automate your financial reporting—from revenue tracking to cash flow forecasting—so you can focus on your product.</p>
-          <div className="mt-8">
-            <a href="#cta" className="bg-brand-accent text-brand-dark font-bold py-3 px-6 rounded-md text-lg hover:bg-opacity-90 transition-transform hover:scale-105">
-              Get Started for Free
-            </a>
+    <div className="bg-background text-foreground">
+      <div className="max-w-7xl mx-auto px-6 py-4">
+        <header className="flex justify-between items-center py-4">
+          <h1 className="text-xl font-bold">[Your Logo]</h1>
+          <nav className="hidden md:flex items-center space-x-6">
+            <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">Features</a>
+            <a href="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">Pricing</a>
+          </nav>
+          <div className="flex items-center gap-4">
+            <Button variant="ghost">Login</Button>
+            <Button>Sign Up Now</Button>
           </div>
-        </section>
+        </header>
 
-        {/* ============== CHAPTER 2: THE PROBLEM ============== */}
-        <section id="problem" className="text-center mt-32 md:mt-48 fade-in-up">
-          <h2 className="text-3xl md:text-4xl font-bold">Tired of spreadsheet chaos?</h2>
-          <p className="mt-4 text-lg text-brand-muted">You didn't start a business to become a part-time accountant. We get it.</p>
-          <div className="mt-8 h-64 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center p-4">
-            <p className="text-brand-muted">[Visual Direction: An animated SVG showing tangled lines untangling into a single, clean line.]</p>
-          </div>
-        </section>
-
-        {/* ============== CHAPTER 3: THE SOLUTION ============== */}
-        <section id="solution" className="text-center mt-32 md:mt-48 fade-in-up">
-          <h2 className="text-3xl md:text-4xl font-bold">Meet [Your Brand Name]. Your financial co-pilot.</h2>
-          <p className="mt-4 text-lg text-brand-muted">We automate the tedious work and translate your data into clear, actionable insights.</p>
-          <div className="mt-8 h-64 bg-white/5 rounded-xl border border-white/10 flex items-center justify-center p-4">
-            <p className="text-brand-muted">[Visual Direction: A sleek, glowing UI mockup of the product's main dashboard.]</p>
-          </div>
-        </section>
-
-        {/* ============== CHAPTER 4: THE DEMONSTRATION (FEATURES) ============== */}
-        <section id="features" className="mt-32 md:mt-48 fade-in-up">
-          <div className="text-center">
-            <h2 className="text-3xl md:text-4xl font-bold">Everything you need. Nothing you don't.</h2>
-            <p className="mt-4 text-lg text-brand-muted">Explore our core features designed for founders.</p>
-          </div>
-          <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white/5 p-8 rounded-xl border border-white/10 transition-all hover:border-brand-accent/50 hover:bg-white/10 hover:-translate-y-2">
-              <h3 className="text-xl font-bold">Real-Time Revenue Tracking</h3>
-              <p className="mt-2 text-brand-muted">Connect your Stripe account and see MRR, ARR, and new subscriptions instantly.</p>
+        <main className="mt-16 md:mt-24">
+          <section id="hero" className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="text-left">
+              <Button variant="outline" className="mb-6">Built for Founders, by Founders</Button>
+              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">Finance for Founders Who'd Rather Be Building.</h2>
+              <p className="mt-6 text-lg md:text-xl text-muted-foreground">Stop wrestling with spreadsheets. We automate your financial reporting so you can focus on your product.</p>
+              <div className="mt-8">
+                <Button size="lg">Get Started for Free</Button>
+              </div>
             </div>
-            <div className="bg-white/5 p-8 rounded-xl border border-white/10 transition-all hover:border-brand-accent/50 hover:bg-white/10 hover:-translate-y-2">
-              <h3 className="text-xl font-bold">Automated Cash Flow</h3>
-              <p className="mt-2 text-brand-muted">Link your bank accounts to see a clear picture of your cash in, cash out, and net burn.</p>
+            <div className="hidden lg:block">
+              <Card className="glass-pane relative h-[450px] bg-card/40 backdrop-blur-lg shadow-2xl shadow-background">
+                <CardContent className="p-4">
+                  {/* Placeholder for a product screenshot or animation */}
+                  <div className="w-full h-full bg-muted rounded-lg flex items-center justify-center">
+                    <p className="text-muted-foreground">Product Mockup</p>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
-            <div className="bg-white/5 p-8 rounded-xl border border-white/10 transition-all hover:border-brand-accent/50 hover:bg-white/10 hover:-translate-y-2">
-              <h3 className="text-xl font-bold">Intelligent Runway Forecasting</h3>
-              <p className="mt-2 text-brand-muted">Know exactly how many months of runway you have left based on real-time data.</p>
+          </section>
+
+          <section id="features" className="mt-32 md:mt-48">
+            <div className="text-center">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">Everything you need.</h2>
+              <p className="mt-4 text-lg text-muted-foreground">Nothing you don't.</p>
             </div>
-          </div>
-        </section>
-
-        {/* ============== CHAPTER 5: SOCIAL PROOF ============== */}
-        <section id="social-proof" className="text-center mt-32 md:mt-48 max-w-3xl mx-auto fade-in-up">
-          <h2 className="text-3xl md:text-4xl font-bold">Built for modern teams you trust.</h2>
-          <div className="mt-12 text-center p-8 bg-white/5 rounded-xl border border-white/10">
-            <p className="text-2xl italic">"This is the first finance tool that feels like it was built by people who actually understand startups."</p>
-            <p className="mt-6 font-bold text-lg">Alex Cohen</p>
-            <p className="text-brand-muted">CEO at SynthWave AI</p>
-          </div>
-        </section>
-
-        {/* ============== CHAPTER 6: FINAL CTA ============== */}
-        <section id="cta" className="text-center mt-32 md:mt-48 bg-brand-accent/10 py-20 rounded-xl border border-brand-accent/20 fade-in-up">
-          <h2 className="text-3xl md:text-4xl font-bold">Ready to take control of your finances?</h2>
-          <p className="mt-4 text-lg text-brand-muted">Sign up in minutes. No credit card required.</p>
-          <div className="mt-8">
-            <a href="#signup" className="bg-brand-accent text-brand-dark font-bold py-3 px-6 rounded-md text-lg hover:bg-opacity-90 transition-transform hover:scale-105">
-              Sign Up for Free
-            </a>
-          </div>
-        </section>
-      </main>
-
-      {/* ============== FOOTER ============== */}
-      <footer className="text-center text-brand-muted py-16 mt-16 border-t border-white/10 fade-in-up">
-        <p>&copy; 2025 [Your Brand Name]. All rights reserved.</p>
-      </footer>
+            <div className="mt-16 lg:grid lg:grid-cols-2 lg:gap-24 items-start">
+              <div className="flex flex-col gap-24">
+                {features.map((feature) => (
+                  <div key={feature.id} data-feature={feature.id} className="min-h-[250px]">
+                    <h3 className="text-2xl font-bold">{feature.title}</h3>
+                    <p className="mt-4 text-lg text-muted-foreground">{feature.description}</p>
+                  </div>
+                ))}
+              </div>
+              <div className="hidden lg:block sticky top-24">
+                <Card className="glass-pane relative h-[550px] bg-card/40 backdrop-blur-lg shadow-2xl shadow-background">
+                  <CardContent className="p-0">
+                    <div className="p-8 transition-opacity duration-500">
+                      {features.find(f => f.id === activeFeature)?.visual}
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
+          </section>
+        </main>
+      </div>
     </div>
   );
 }
