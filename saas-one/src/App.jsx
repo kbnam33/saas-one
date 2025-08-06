@@ -1,6 +1,24 @@
 import { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+
+// ==================================
+//      THEME TOGGLE COMPONENT
+// ==================================
+function useTheme() {
+  const [theme, setTheme] = useState(() => {
+    return localStorage.getItem('theme') || 'dark';
+  });
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    root.classList.remove('light', 'dark');
+    root.classList.add(theme);
+    localStorage.setItem('theme', theme);
+  }, [theme]);
+
+  return [theme, setTheme];
+}
 
 // ==================================
 //      SVG VISUAL COMPONENTS
@@ -48,6 +66,7 @@ const features = [
 
 function App() {
   const [activeFeature, setActiveFeature] = useState(features[0].id);
+  const [theme, setTheme] = useTheme();
 
   useEffect(() => {
     const featureDivs = document.querySelectorAll('[data-feature]');
@@ -75,7 +94,7 @@ function App() {
           </nav>
           <div className="flex items-center gap-4">
             <Button variant="ghost">Login</Button>
-            <Button>Sign Up Now</Button>
+            <Button className="btn-custom-primary">Sign Up Now</Button>
           </div>
         </header>
 
@@ -86,18 +105,29 @@ function App() {
               <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">Finance for Founders Who'd Rather Be Building.</h2>
               <p className="mt-6 text-lg md:text-xl text-muted-foreground">Stop wrestling with spreadsheets. We automate your financial reporting so you can focus on your product.</p>
               <div className="mt-8">
-                <Button size="lg">Get Started for Free</Button>
+                <Button size="lg" className="btn-custom-primary">Get Started for Free</Button>
               </div>
             </div>
             <div className="hidden lg:block">
               <Card className="glass-pane relative h-[450px] bg-card/40 backdrop-blur-lg shadow-2xl shadow-background">
                 <CardContent className="p-4">
-                  {/* Placeholder for a product screenshot or animation */}
                   <div className="w-full h-full bg-muted rounded-lg flex items-center justify-center">
                     <p className="text-muted-foreground">Product Mockup</p>
                   </div>
                 </CardContent>
               </Card>
+            </div>
+          </section>
+          
+          <section id="social-proof" className="mt-32 md:mt-48">
+            <div className="text-center">
+              <h3 className="text-lg text-muted-foreground">Trusted by the best teams in the world</h3>
+              <div className="mt-8 flex justify-center items-center gap-x-8 md:gap-x-12 opacity-70">
+                <div className="w-28 h-12 flex items-center justify-center text-2xl font-bold">Logoipsum</div>
+                <div className="w-28 h-12 flex items-center justify-center text-2xl font-bold">Synergy</div>
+                <div className="w-28 h-12 hidden sm:flex items-center justify-center text-2xl font-bold">Innovate</div>
+                <div className="w-28 h-12 hidden md:flex items-center justify-center text-2xl font-bold">Quantum</div>
+              </div>
             </div>
           </section>
 
@@ -126,7 +156,96 @@ function App() {
               </div>
             </div>
           </section>
+
+          <section id="pricing" className="mt-32 md:mt-48">
+            <div className="text-center">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">Simple, transparent pricing</h2>
+              <p className="mt-4 text-lg text-muted-foreground">Choose the plan that's right for your stage.</p>
+            </div>
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+              <Card className="flex flex-col">
+                <CardHeader>
+                  <CardTitle>Hobby</CardTitle>
+                  <CardDescription>For founders just getting started.</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-grow flex flex-col">
+                  <div className="mt-6">
+                    <span className="text-5xl font-bold">$0</span>
+                    <span className="text-muted-foreground"> / mo</span>
+                  </div>
+                  <ul className="mt-6 space-y-4 text-muted-foreground flex-grow">
+                    <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Revenue Tracking</li>
+                    <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Basic Cash Flow</li>
+                    <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> 1 Bank Connection</li>
+                  </ul>
+                  <Button variant="outline" className="mt-8 w-full">Get Started</Button>
+                </CardContent>
+              </Card>
+
+              <Card className="flex flex-col border-primary ring-2 ring-primary">
+                <CardHeader>
+                  <CardTitle>Pro</CardTitle>
+                  <CardDescription>For growing businesses ready to scale.</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-grow flex flex-col">
+                  <div className="mt-6">
+                    <span className="text-5xl font-bold">$49</span>
+                    <span className="text-muted-foreground"> / mo</span>
+                  </div>
+                  <ul className="mt-6 space-y-4 text-muted-foreground flex-grow">
+                    <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Everything in Hobby</li>
+                    <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Runway Forecasting</li>
+                    <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Unlimited Connections</li>
+                    <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Priority Support</li>
+                  </ul>
+                  <Button className="mt-8 w-full btn-custom-primary">Choose Pro</Button>
+                </CardContent>
+              </Card>
+
+              <Card className="flex flex-col">
+                <CardHeader>
+                  <CardTitle>Enterprise</CardTitle>
+                  <CardDescription>For established teams with custom needs.</CardDescription>
+                </CardHeader>
+                <CardContent className="flex-grow flex flex-col">
+                  <div className="mt-6">
+                    <span className="text-5xl font-bold">Custom</span>
+                  </div>
+                   <ul className="mt-6 space-y-4 text-muted-foreground flex-grow">
+                    <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Everything in Pro</li>
+                    <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Dedicated Account Manager</li>
+                    <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Custom Integrations</li>
+                  </ul>
+                  <Button variant="outline" className="mt-8 w-full">Contact Sales</Button>
+                </CardContent>
+              </Card>
+            </div>
+          </section>
+
+          <section id="cta" className="mt-32 md:mt-48 text-center">
+            <Card className="glass-pane relative bg-card/40 backdrop-blur-lg p-12">
+              <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">Ready to take control?</h2>
+              <p className="mt-4 text-lg text-muted-foreground max-w-xl mx-auto">Stop guessing, start growing. Get a clear view of your startup's finances in minutes.</p>
+              <div className="mt-8">
+                <Button size="lg" className="btn-custom-primary">Sign Up for Free</Button>
+              </div>
+            </Card>
+          </section>
         </main>
+
+        <footer className="mt-24 py-8 border-t">
+          <div className="flex justify-between items-center">
+            <p className="text-muted-foreground">&copy; 2025 [Your Brand Name]. All rights reserved.</p>
+            <div className="flex items-center gap-4">
+                {/* Theme Toggle Button */}
+                <Button variant="outline" size="icon" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+                    <svg className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <svg className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <span className="sr-only">Toggle theme</span>
+                </Button>
+            </div>
+          </div>
+        </footer>
       </div>
     </div>
   );
