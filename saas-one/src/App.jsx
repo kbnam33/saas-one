@@ -355,12 +355,14 @@ function App() {
                       </div>
                   </div>
               </div>
-              <div className="h-px w-full bg-border/10 absolute bottom-0" />
+              <div className="h-px w-full bg-border/20 absolute bottom-0" />
           </section>
 
           <section id="benefits" className="relative mt-32 md:mt-48 pt-16">
+              <div className="h-px w-full bg-border/20 absolute top-0" />
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-border/20"></div>
               <div className="grid lg:grid-cols-2">
-                  <div ref={benefitOneRef} className={`relative transition-opacity duration-700 p-12 lg:border-r lg:border-border/10 ${benefitOneVisible ? 'opacity-100' : 'opacity-0'}`}>
+                  <div ref={benefitOneRef} className={`relative transition-opacity duration-700 p-12 lg:border-r lg:border-border/20 ${benefitOneVisible ? 'opacity-100' : 'opacity-0'}`}>
                       <h3 className="text-2xl font-bold tracking-tighter">Make Smarter Decisions</h3>
                       <p className="mt-2 text-lg text-muted-foreground">Understand your growth drivers to scale your business.</p>
                       <div className="mt-12 h-80">
@@ -383,7 +385,7 @@ function App() {
               <p className="mt-4 text-lg text-muted-foreground">Choose the plan that's right for your stage.</p>
             </div>
             <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Card className="flex flex-col">
+              <Card className="flex flex-col card-darker">
                 <CardHeader>
                   <CardTitle>Hobby</CardTitle>
                   <CardDescription>For founders just getting started.</CardDescription>
@@ -398,11 +400,11 @@ function App() {
                     <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Basic Cash Flow</li>
                     <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> 1 Bank Connection</li>
                   </ul>
-                  <Button variant="outline" className="mt-8 w-full">Get Started</Button>
+                  <Button className="mt-8 w-full btn-outline-dark">Get Started</Button>
                 </CardContent>
               </Card>
 
-              <Card className="flex flex-col border-primary ring-2 ring-primary">
+              <Card className="flex flex-col border-primary ring-2 ring-primary card-darker">
                 <CardHeader>
                   <CardTitle>Pro</CardTitle>
                   <CardDescription>For growing businesses ready to scale.</CardDescription>
@@ -422,7 +424,7 @@ function App() {
                 </CardContent>
               </Card>
 
-              <Card className="flex flex-col">
+              <Card className="flex flex-col card-darker">
                 <CardHeader>
                   <CardTitle>Enterprise</CardTitle>
                   <CardDescription>For established teams with custom needs.</CardDescription>
@@ -436,7 +438,7 @@ function App() {
                     <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Dedicated Account Manager</li>
                     <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Custom Integrations</li>
                   </ul>
-                  <Button variant="outline" className="mt-8 w-full">Contact Sales</Button>
+                  <Button className="mt-8 w-full btn-outline-dark">Contact Sales</Button>
                 </CardContent>
               </Card>
             </div>

@@ -20,7 +20,7 @@
     --accent-foreground: 222.2 47.4% 11.2%;
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
+    --border: 0 0% 25%; /* A neutral, lighter whitish-grey */
     --input: 214.3 31.8% 91.4%;
     --ring: 150 95% 42%;
     --radius: 0.75rem; /* Slightly larger radius */
@@ -43,7 +43,7 @@
     --accent-foreground: 0 0% 98%;
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 0% 98%;
-    --border: 217.2 32.6% 20%;
+    --border: 0 0% 25%; /* A neutral, lighter whitish-grey */
     --input: 217.2 32.6% 15%;
     --ring: 150 80% 50%;
   }
@@ -132,12 +132,10 @@
         @apply transform-gpu scale-[1.02];
     }
     
-    /* REFINED v5: Final Feature Display Screen */
     .feature-display-screen {
         @apply relative w-full h-full rounded-2xl overflow-hidden;
     }
 
-    /* The fading gradient border */
     .dark .feature-display-screen::after {
         content: '';
         position: absolute;
@@ -153,14 +151,13 @@
         pointer-events: none;
     }
 
-    /* New, cleaner "glassy glow" at the top */
     .dark .feature-display-screen::before {
         content: '';
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 50%; /* Restrict glow to top half */
+        height: 50%;
         background: radial-gradient(ellipse 100% 70% at 50% 0%, hsl(0 0% 100% / 0.08), transparent);
         pointer-events: none;
     }
@@ -169,6 +166,16 @@
         @apply w-full h-full relative z-10;
         -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
         mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    }
+
+    /* New styles for Pricing Section */
+    .dark .card-darker {
+        background-color: hsl(0 0% 8%);
+        border-color: hsl(var(--border) / 0.5);
+    }
+
+    .btn-outline-dark {
+        @apply bg-transparent border border-border/50 text-muted-foreground hover:bg-border/10 hover:text-foreground transition-colors duration-300;
     }
 }
 
