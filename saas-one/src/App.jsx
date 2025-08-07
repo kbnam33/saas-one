@@ -48,24 +48,40 @@ const RevenueVisual = ({ is_active }) => (
 
 const CashflowVisual = ({ is_active }) => (
     <svg viewBox="0 0 400 300" className="w-full h-full" aria-labelledby="cashflow-title" role="img">
-        <title id="cashflow-title">Illustration of automated cash flow from multiple sources</title>
-        <g className={is_active ? 'animate-text-fade-in' : 'opacity-0'} style={{ animationDelay: '0.2s' }}>
-            <rect x="60" y="80" width="80" height="40" rx="8" fill="hsl(var(--muted) / 0.3)" />
-            <text x="100" y="105" textAnchor="middle" fill="hsl(var(--muted-foreground))" className="font-bold text-sm">stripe</text>
+        <title id="cashflow-title">Illustration of an animated list of cash flow items</title>
+        <rect x="50" y="40" width="300" height="220" rx="12" fill="#0F0F0F" />
+
+        {/* Animated List Items */}
+        <g className={is_active ? 'animate-list-item' : 'opacity-0'} style={{ animationDelay: '0.2s' }}>
+            <circle cx="75" cy="82" r="3" fill="#4ADE75" />
+            <text x="90" y="85" fill="hsl(var(--foreground))" className="text-sm font-sans">MRR</text>
+            <text x="330" y="85" fill="#4ADE75" textAnchor="end" className="text-sm font-mono">+ $12,400</text>
         </g>
-        <g className={is_active ? 'animate-text-fade-in' : 'opacity-0'} style={{ animationDelay: '0.4s' }}>
-            <rect x="60" y="180" width="80" height="40" rx="8" fill="hsl(var(--muted) / 0.3)" />
-            <text x="100" y="205" textAnchor="middle" fill="hsl(var(--muted-foreground))" className="font-bold text-sm">Bank</text>
+        <g className={is_active ? 'animate-list-item' : 'opacity-0'} style={{ animationDelay: '0.4s' }}>
+            <circle cx="75" cy="112" r="3" fill="#4ADE75" />
+            <text x="90" y="115" fill="hsl(var(--foreground))" className="text-sm font-sans">New Sale</text>
+            <text x="330" y="115" fill="#4ADE75" textAnchor="end" className="text-sm font-mono">+ $2,000</text>
         </g>
-        <g transform="translate(240, 130)" className={is_active ? 'animate-point-fade-in' : 'opacity-0'}>
-            <rect width="120" height="40" rx="8" fill="hsl(var(--card))" stroke="hsl(var(--border))" />
-            <circle cx="20" cy="20" r="4" fill="hsl(var(--primary))" />
-            <text x="40" y="25" fill="hsl(var(--foreground))" className="text-sm font-semibold">Dashboard</text>
+        <g className={is_active ? 'animate-list-item' : 'opacity-0'} style={{ animationDelay: '0.6s' }}>
+            <circle cx="75" cy="142" r="3" fill="#F87171" />
+            <text x="90" y="145" fill="hsl(var(--foreground))" className="text-sm font-sans">Cloud Hosting</text>
+            <text x="330" y="145" fill="#F87171" textAnchor="end" className="text-sm font-mono">- $800</text>
         </g>
-        <path d="M140,100 C 180,100 200,150 240,150" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="1.5" strokeDasharray="3 3" className={is_active ? 'animate-line-draw' : ''} style={{ animationDelay: '0.6s' }}/>
-        <path d="M140,200 C 180,200 200,150 240,150" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="1.5" strokeDasharray="3 3" className={is_active ? 'animate-line-draw' : ''} style={{ animationDelay: '0.8s' }}/>
+        <g className={is_active ? 'animate-list-item' : 'opacity-0'} style={{ animationDelay: '0.8s' }}>
+            <circle cx="75" cy="172" r="3" fill="#F87171" />
+            <text x="90" y="175" fill="hsl(var(--foreground))" className="text-sm font-sans">Payroll</text>
+            <text x="330" y="175" fill="#F87171" textAnchor="end" className="text-sm font-mono">- $6,500</text>
+        </g>
+
+        {/* Divider and Net */}
+        <line x1="70" y1="200" x2="330" y2="200" stroke="hsl(var(--border))" strokeOpacity="0.2" className={is_active ? 'animate-line-fade-in' : 'opacity-0'} style={{ animationDelay: '1s' }} />
+        <g className={is_active ? 'animate-list-item' : 'opacity-0'} style={{ animationDelay: '1.2s' }}>
+            <text x="90" y="230" fill="hsl(var(--muted-foreground))" className="text-sm font-semibold font-sans">Net Cash Flow</text>
+            <text x="330" y="230" fill="hsl(var(--foreground))" textAnchor="end" className="text-sm font-semibold font-mono">+ $7,100</text>
+        </g>
     </svg>
 );
+
 
 const ForecastingVisual = ({ is_active }) => (
     <svg viewBox="0 0 400 300" className="w-full h-full" aria-labelledby="forecasting-title" role="img">
@@ -133,51 +149,6 @@ const FocusFeatureCardVisual = () => (
         </g>
     </svg>
 );
-
-// ==================================
-//      SVG VISUAL COMPONENTS (BENEFITS SECTION)
-// ==================================
-const BenefitOneVisual = () => (
-    <svg viewBox="0 0 400 300" className="w-full h-full" aria-labelledby="benefit-one-title" role="img">
-        <title id="benefit-one-title">Dashboard showing key growth metrics</title>
-        <rect width="400" height="300" rx="8" fill="hsl(var(--card) / 0.5)" />
-        <rect x="20" y="20" width="360" height="40" rx="4" fill="hsl(var(--muted) / 0.3)" />
-        <circle cx="45" cy="40" r="6" fill="hsl(var(--muted-foreground))" />
-        <rect x="60" y="35" width="100" height="10" rx="2" fill="hsl(var(--muted-foreground))" />
-        
-        <rect x="20" y="80" width="170" height="100" rx="4" fill="hsl(var(--muted) / 0.3)" />
-        <text x="35" y="100" fill="hsl(var(--muted-foreground))" className="text-sm">MRR Growth</text>
-        <text x="35" y="140" fill="hsl(var(--primary))" className="text-4xl font-bold">15%</text>
-
-        <rect x="210" y="80" width="170" height="100" rx="4" fill="hsl(var(--muted) / 0.3)" />
-        <text x="225" y="100" fill="hsl(var(--muted-foreground))" className="text-sm">New Customers</text>
-        <text x="225" y="140" fill="hsl(var(--foreground))" className="text-4xl font-bold">84</text>
-
-        <rect x="20" y="200" width="360" height="80" rx="4" fill="hsl(var(--muted) / 0.3)" />
-        <path d="M40 260 C 100 220, 180 250, 240 230 S 340 200, 380 210" stroke="hsl(var(--muted-foreground))" strokeWidth="2" fill="none" />
-    </svg>
-);
-
-const BenefitTwoVisual = () => (
-    <svg viewBox="0 0 400 300" className="w-full h-full" aria-labelledby="benefit-two-title" role="img">
-        <title id="benefit-two-title">Dashboard showing runway forecast</title>
-        <rect width="400" height="300" rx="8" fill="hsl(var(--card) / 0.5)" />
-        <rect x="20" y="20" width="360" height="40" rx="4" fill="hsl(var(--muted) / 0.3)" />
-        <circle cx="45" cy="40" r="6" fill="hsl(var(--muted-foreground))" />
-        <rect x="60" y="35" width="100" height="10" rx="2" fill="hsl(var(--muted-foreground))" />
-
-        <text x="40" y="100" fill="hsl(var(--muted-foreground))" className="text-lg">What's our current runway?</text>
-        <rect x="40" y="120" width="320" height="2" rx="1" fill="hsl(var(--border))" />
-        
-        <g transform="translate(40, 150)">
-            <circle cx="15" cy="15" r="10" fill="hsl(var(--primary) / 0.2)" />
-            <path d="M12 15 l3 3 l5 -5" stroke="hsl(var(--primary))" strokeWidth="2" fill="none" />
-            <text x="40" y="20" fill="hsl(var(--foreground))" className="text-lg">Your runway is</text>
-            <text x="160" y="20" fill="hsl(var(--primary))" className="text-lg font-bold">18 months</text>
-        </g>
-    </svg>
-);
-
 
 // ==================================
 //      MAIN APP COMPONENT
@@ -365,15 +336,15 @@ function App() {
                   <div ref={benefitOneRef} className={`relative transition-opacity duration-700 p-12 lg:border-r lg:border-border/20 ${benefitOneVisible ? 'opacity-100' : 'opacity-0'}`}>
                       <h3 className="text-2xl font-bold tracking-tighter">Make Smarter Decisions</h3>
                       <p className="mt-2 text-lg text-muted-foreground">Understand your growth drivers to scale your business.</p>
-                      <div className="mt-12 h-80">
-                          <BenefitOneVisual />
+                      <div className="mt-12 flex items-start justify-start">
+                          <img src="/Smart decisions.svg" alt="Dashboard showing key growth metrics" className="w-full h-auto max-w-md" />
                       </div>
                   </div>
                   <div ref={benefitTwoRef} className={`relative transition-opacity duration-700 delay-300 p-12 ${benefitTwoVisible ? 'opacity-100' : 'opacity-0'}`}>
                       <h3 className="text-2xl font-bold tracking-tighter">Never Lose Sight of Your Runway</h3>
                       <p className="mt-2 text-lg text-muted-foreground">Get an up-to-the-minute forecast so you can plan with confidence.</p>
-                      <div className="mt-12 h-80">
-                          <BenefitTwoVisual />
+                      <div className="mt-12 flex items-start justify-start">
+                          <img src="/Sight of runway.svg" alt="Dashboard showing runway forecast" className="w-full h-auto max-w-md" />
                       </div>
                   </div>
               </div>

@@ -175,7 +175,7 @@
     }
 
     .btn-outline-dark {
-        @apply bg-transparent border border-border/50 text-muted-foreground hover:bg-border/10 hover:text-foreground transition-colors duration-300;
+        @apply bg-transparent border border-border/50 text-muted-foreground hover:bg-border/10 hover:text-foreground transition-colors duration-300 focus-visible:ring-0 focus-visible:ring-offset-0;
     }
 }
 
@@ -210,6 +210,10 @@
   from { opacity: 0; }
   to { opacity: 1; }
 }
+@keyframes list-item-in {
+  from { opacity: 0; transform: translateX(-10px); }
+  to { opacity: 1; transform: translateX(0); }
+}
 .animate-line-draw {
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
@@ -242,5 +246,13 @@
 }
 .animate-text-fade-in {
   opacity: 0;
-  animation: text-fade-in 0.5s ease-in 0.3s forwards;
+  animation: text-fade-in 0.5s ease-in forwards;
+}
+.animate-line-fade-in {
+  opacity: 0;
+  animation: text-fade-in 0.5s ease-in forwards;
+}
+.animate-list-item {
+  opacity: 0;
+  animation: list-item-in 0.5s ease-out forwards;
 }
