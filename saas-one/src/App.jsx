@@ -21,7 +21,7 @@ function useTheme() {
 }
 
 // ==================================
-//      SVG VISUAL COMPONENTS (UPDATED)
+//      SVG VISUAL COMPONENTS (STICKY SCROLL)
 // ==================================
 
 const RevenueVisual = ({ is_active }) => (
@@ -32,20 +32,9 @@ const RevenueVisual = ({ is_active }) => (
                 <stop offset="0%" style={{ stopColor: 'hsl(var(--foreground))', stopOpacity: 0.1 }} />
                 <stop offset="100%" style={{ stopColor: 'hsl(var(--foreground))', stopOpacity: 0 }} />
             </linearGradient>
-            <filter id="tooltipGlow" x="-50%" y="-50%" width="200%" height="200%">
-                <feGaussianBlur stdDeviation="4" result="coloredBlur" />
-                <feMerge>
-                    <feMergeNode in="coloredBlur" />
-                    <feMergeNode in="SourceGraphic" />
-                </feMerge>
-            </filter>
         </defs>
-        
-        {/* Chart Path and Fill */}
         <path d="M50,250 C 150,150 200,180 250,130 S 350,80 350,80" fill="url(#revenueGradientNew)" className={is_active ? 'animate-area-fill' : ''} />
         <path d="M50,250 C 150,150 200,180 250,130 S 350,80 350,80" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="2" className={is_active ? 'animate-line-draw' : ''} />
-        
-        {/* Animated Point and Tooltip */}
         <g className={is_active ? 'animate-point-move' : 'opacity-0'}>
             <circle cx="250" cy="130" r="5" fill="hsl(var(--primary))" />
             <g transform="translate(215, 80)">
@@ -60,7 +49,6 @@ const RevenueVisual = ({ is_active }) => (
 const CashflowVisual = ({ is_active }) => (
     <svg viewBox="0 0 400 300" className="w-full h-full" aria-labelledby="cashflow-title" role="img">
         <title id="cashflow-title">Illustration of automated cash flow from multiple sources</title>
-        {/* Source Icons (Stripe and Bank) */}
         <g className={is_active ? 'animate-text-fade-in' : 'opacity-0'} style={{ animationDelay: '0.2s' }}>
             <rect x="60" y="80" width="80" height="40" rx="8" fill="hsl(var(--muted) / 0.3)" />
             <text x="100" y="105" textAnchor="middle" fill="hsl(var(--muted-foreground))" className="font-bold text-sm">stripe</text>
@@ -69,15 +57,11 @@ const CashflowVisual = ({ is_active }) => (
             <rect x="60" y="180" width="80" height="40" rx="8" fill="hsl(var(--muted) / 0.3)" />
             <text x="100" y="205" textAnchor="middle" fill="hsl(var(--muted-foreground))" className="font-bold text-sm">Bank</text>
         </g>
-
-        {/* Central Dashboard Element */}
         <g transform="translate(240, 130)" className={is_active ? 'animate-point-fade-in' : 'opacity-0'}>
             <rect width="120" height="40" rx="8" fill="hsl(var(--card))" stroke="hsl(var(--border))" />
             <circle cx="20" cy="20" r="4" fill="hsl(var(--primary))" />
             <text x="40" y="25" fill="hsl(var(--foreground))" className="text-sm font-semibold">Dashboard</text>
         </g>
-
-        {/* Animated Data Flow Lines */}
         <path d="M140,100 C 180,100 200,150 240,150" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="1.5" strokeDasharray="3 3" className={is_active ? 'animate-line-draw' : ''} style={{ animationDelay: '0.6s' }}/>
         <path d="M140,200 C 180,200 200,150 240,150" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="1.5" strokeDasharray="3 3" className={is_active ? 'animate-line-draw' : ''} style={{ animationDelay: '0.8s' }}/>
     </svg>
@@ -86,21 +70,12 @@ const CashflowVisual = ({ is_active }) => (
 const ForecastingVisual = ({ is_active }) => (
     <svg viewBox="0 0 400 300" className="w-full h-full" aria-labelledby="forecasting-title" role="img">
         <title id="forecasting-title">Illustration of an intelligent runway forecast chart</title>
-        {/* Chart axes and grid */}
         <path d="M50 250 H 350 M 80 50 V 250" fill="none" stroke="hsl(var(--border))" strokeOpacity="0.5" />
         <text x="65" y="60" textAnchor="end" fill="hsl(var(--muted-foreground))" className="text-xs">$</text>
         <text x="345" y="265" textAnchor="end" fill="hsl(var(--muted-foreground))" className="text-xs">Time</text>
-        
-        {/* Historical cash balance line */}
         <path d="M80,80 C 120,100 160,140 200,150" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="2" className={is_active ? 'animate-line-draw' : ''} />
-        
-        {/* Projected runway line */}
         <path d="M200,150 C 240,160 280,200 320,240" fill="none" stroke="hsl(var(--primary))" strokeWidth="2" strokeDasharray="4 4" className={is_active ? 'animate-forecast-draw' : ''} />
-        
-        {/* "Today" marker */}
         <circle cx="200" cy="150" r="4" fill="hsl(var(--primary))" className={is_active ? 'animate-point-fade-in' : ''} />
-        
-        {/* Runway End Annotation */}
         <g className={is_active ? 'animate-text-fade-in' : 'opacity-0'} style={{ animationDelay: '1.8s' }}>
             <line x1="320" y1="240" x2="320" y2="270" stroke="hsl(var(--muted-foreground))" strokeWidth="1" />
             <text x="320" y="285" textAnchor="middle" fill="hsl(var(--muted-foreground))" className="text-xs font-semibold">Runway End</text>
@@ -108,12 +83,56 @@ const ForecastingVisual = ({ is_active }) => (
     </svg>
 );
 
-
 const features = [
   { id: 'revenue', title: 'Real-Time Revenue Tracking', description: "Forget static reports. Connect your Stripe account in seconds for a live view of your MRR and ARR.", visual: <RevenueVisual /> },
   { id: 'cashflow', title: 'Automated Cash Flow', description: 'Link your bank accounts to see a clear, automated picture of your cash in, cash out, and net burn.', visual: <CashflowVisual /> },
   { id: 'forecasting', title: 'Intelligent Runway Forecasting', description: 'Our tool analyzes your real-time data to give you an accurate, up-to-the-minute runway forecast.', visual: <ForecastingVisual /> }
 ];
+
+// ==================================
+//      SVG VISUAL COMPONENTS (FEATURE CARDS - NEW)
+// ==================================
+const AutomateFeatureCardVisual = () => (
+    <svg viewBox="0 0 300 200" className="w-full h-full" aria-labelledby="automate-card-title" role="img">
+        <title id="automate-card-title">Automate the Tedious</title>
+        <g opacity="0.9">
+            <rect x="40" y="50" width="220" height="120" rx="8" fill="hsl(var(--muted) / 0.1)" stroke="hsl(var(--border))" />
+            <rect x="55" y="65" width="50" height="10" rx="2" fill="hsl(var(--muted) / 0.3)" />
+            <rect x="55" y="85" width="190" height="40" rx="4" fill="hsl(var(--muted) / 0.2)" />
+            <rect x="55" y="135" width="150" height="20" rx="3" fill="hsl(var(--muted) / 0.3)" />
+            <circle cx="230" cy="145" r="10" fill="hsl(var(--primary) / 0.2)" />
+            <path d="M227 145 l3 3 l5 -5" stroke="hsl(var(--primary))" strokeWidth="2" fill="none" />
+        </g>
+    </svg>
+);
+
+const ClarityFeatureCardVisual = () => (
+    <svg viewBox="0 0 300 200" className="w-full h-full" aria-labelledby="clarity-card-title" role="img">
+        <title id="clarity-card-title">Clarity in Real-Time</title>
+        <g opacity="0.9">
+            <rect x="40" y="50" width="220" height="120" rx="8" fill="hsl(var(--muted) / 0.1)" stroke="hsl(var(--border))" />
+            <path d="M60 150 C 90 110, 120 130, 150 110 S 210 80, 240 90" fill="none" stroke="hsl(var(--muted-foreground))" strokeWidth="2" />
+            <circle cx="240" cy="90" r="4" fill="hsl(var(--primary))" />
+            <rect x="55" y="65" width="80" height="25" rx="4" fill="hsl(var(--muted) / 0.3)" />
+            <rect x="145" y="65" width="50" height="10" rx="2" fill="hsl(var(--muted) / 0.2)" />
+        </g>
+    </svg>
+);
+
+const FocusFeatureCardVisual = () => (
+    <svg viewBox="0 0 300 200" className="w-full h-full" aria-labelledby="focus-card-title" role="img">
+        <title id="focus-card-title">Focus on Building</title>
+        <g opacity="0.9">
+            <rect x="40" y="50" width="80" height="120" rx="8" fill="hsl(var(--muted) / 0.1)" stroke="hsl(var(--border))" />
+            <rect x="50" y="65" width="60" height="10" rx="2" fill="hsl(var(--muted) / 0.3)" />
+            <rect x="50" y="85" width="60" height="10" rx="2" fill="hsl(var(--muted) / 0.3)" />
+            <rect x="50" y="105" width="60" height="10" rx="2" fill="hsl(var(--muted) / 0.3)" />
+
+            <rect x="130" y="50" width="130" height="120" rx="8" fill="hsl(var(--primary) / 0.1)" stroke="hsl(var(--primary))" />
+            <text x="195" y="110" textAnchor="middle" fill="hsl(var(--primary))" className="text-lg font-bold">Product</text>
+        </g>
+    </svg>
+);
 
 // ==================================
 //      MAIN APP COMPONENT
@@ -128,25 +147,19 @@ function App() {
     const handleScroll = () => {
         const element = featureSectionRef.current;
         if (!element) return;
-
         const { top, height } = element.getBoundingClientRect();
         const scrollableHeight = height - window.innerHeight;
-        
-        // Check if the sticky container is active
         if (top <= 0 && top > -scrollableHeight) {
             const progress = Math.abs(top) / (scrollableHeight / (features.length -1));
             let newIndex = Math.round(progress);
-
             if (newIndex !== activeFeatureIndex) {
               setActiveFeatureIndex(newIndex);
             }
         }
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-}, [activeFeatureIndex]);
-
+  }, [activeFeatureIndex]);
 
   return (
     <div className="bg-background text-foreground">
@@ -174,7 +187,7 @@ function App() {
               </div>
             </div>
             <div className="hidden lg:block">
-              <Card className="glass-pane relative h-[450px] bg-card/40">
+              <Card className="glass-pane relative h-[450px]">
                 <CardContent className="p-4 h-full">
                   <div className="w-full h-full bg-muted/50 rounded-lg flex items-center justify-center">
                     <p className="text-muted-foreground">Product Mockup</p>
@@ -196,10 +209,45 @@ function App() {
             </div>
           </section>
 
+          <section id="three-features" className="mt-32 md:mt-48">
+              <div className="text-center max-w-2xl mx-auto">
+                  <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">Built for Modern Founders</h2>
+                  <p className="mt-4 text-lg text-muted-foreground">Crafted with the speed and intuition you need to succeed.</p>
+              </div>
+              <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <Card className="feature-card">
+                      <CardContent className="p-8 h-full flex flex-col items-start text-left">
+                          <div className="h-48 w-full flex-grow flex items-center justify-center">
+                              <AutomateFeatureCardVisual />
+                          </div>
+                          <h3 className="mt-6 text-xl font-bold">Automate the Tedious</h3>
+                          <p className="mt-2 text-muted-foreground">Connect your financial accounts in seconds, not hours.</p>
+                      </CardContent>
+                  </Card>
+                  <Card className="feature-card">
+                      <CardContent className="p-8 h-full flex flex-col items-start text-left">
+                          <div className="h-48 w-full flex-grow flex items-center justify-center">
+                              <ClarityFeatureCardVisual />
+                          </div>
+                          <h3 className="mt-6 text-xl font-bold">Clarity in Real-Time</h3>
+                          <p className="mt-2 text-muted-foreground">Get a clear dashboard of your key metrics, anytime.</p>
+                      </CardContent>
+                  </Card>
+                  <Card className="feature-card">
+                      <CardContent className="p-8 h-full flex flex-col items-start text-left">
+                          <div className="h-48 w-full flex-grow flex items-center justify-center">
+                              <FocusFeatureCardVisual />
+                          </div>
+                          <h3 className="mt-6 text-xl font-bold">Focus on Building</h3>
+                          <p className="mt-2 text-muted-foreground">Make financial management effortless and get back to your product.</p>
+                      </CardContent>
+                  </Card>
+              </div>
+          </section>
+
           <section ref={featureSectionRef} id="features" className="relative h-[300vh] mt-32 md:mt-48">
               <div className="sticky top-0 flex h-screen items-center">
                   <div className="grid lg:grid-cols-2 gap-24 items-center max-w-7xl mx-auto w-full">
-                      {/* Left Column: Text Content */}
                       <div className="text-left">
                           <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-8">Everything you need. <br /> Nothing you don't.</h2>
                           <div className="flex flex-col gap-4">
@@ -216,9 +264,8 @@ function App() {
                               ))}
                           </div>
                       </div>
-                      {/* Right Column: Visuals */}
                       <div className="relative h-[550px] w-full">
-                           <Card className="glass-pane absolute inset-0 bg-card/40">
+                           <Card className="glass-pane absolute inset-0">
                                <CardContent className="p-0 h-full w-full">
                                   {features.map((feature, index) => (
                                       <div key={`${feature.id}-visual`} className={`absolute inset-0 p-8 transition-opacity duration-300 ${activeFeatureIndex === index ? 'opacity-100' : 'opacity-0'}`}>
@@ -298,7 +345,7 @@ function App() {
           </section>
 
           <section id="cta" className="mt-32 md:mt-48 text-center">
-            <Card className="glass-pane relative bg-card/40 p-12">
+            <Card className="glass-pane relative p-12">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">Ready to take control?</h2>
               <p className="mt-4 text-lg text-muted-foreground max-w-xl mx-auto">Stop guessing, start growing. Get a clear view of your startup's finances in minutes.</p>
               <div className="mt-8">
@@ -312,7 +359,6 @@ function App() {
           <div className="flex justify-between items-center">
             <p className="text-muted-foreground">&copy; 2025 [Your Brand Name]. All rights reserved.</p>
             <div className="flex items-center gap-4">
-                {/* Theme Toggle Button */}
                 <Button variant="outline" size="icon" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
                     <svg className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                     <svg className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
