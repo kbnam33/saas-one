@@ -1,0 +1,122 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  .dashboard-container {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 98%;
+    --card: 240 4% 10%;
+    --card-foreground: 0 0% 98%;
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 98%;
+    --primary: 150 80% 50%;
+    --destructive: 0 70% 55%;
+    --warning: 45 90% 55%;
+    --primary-foreground: 150 95% 10%;
+    --secondary: 240 4% 15%;
+    --secondary-foreground: 0 0% 98%;
+    --muted: 240 4% 15%;
+    --muted-foreground: 240 5% 65%;
+    --accent: 240 4% 15%;
+    --accent-foreground: 0 0% 98%;
+    --border: 240 4% 15%;
+    --input: 240 4% 15%;
+    --ring: 150 80% 50%;
+    --radius: 0.75rem;
+  }
+}
+
+@layer components {
+    .dashboard-container .glass-pane {
+        @apply bg-[#121212] border border-[#262626] rounded-lg;
+    }
+    .dashboard-container .glass-pane-darker, .dashboard-container .card-darker {
+        @apply bg-[#0F0F0F] border border-[#1F1F1F];
+    }
+    .dashboard-container .stat-card {
+        @apply relative bg-[#0F0F0F] border border-[#242424] rounded-lg overflow-hidden transition-all duration-300;
+    }
+    .dashboard-container .stat-card::before {
+        content: '';
+        @apply absolute inset-0 transition-opacity duration-300 pointer-events-none opacity-0;
+        background: radial-gradient(circle at 50% -20%, var(--glow-color, hsl(var(--primary) / 0.1)), transparent 40%);
+    }
+    .dashboard-container .stat-card:hover::before {
+        @apply opacity-100;
+    }
+    .dashboard-container .stat-card::after {
+        content: '';
+        @apply absolute top-0 left-0 right-0 h-px;
+        background: linear-gradient(90deg, transparent, var(--glow-color, hsl(var(--primary) / 0.5)), transparent);
+    }
+    .dashboard-container .glow-primary { --glow-color: hsl(var(--primary) / 0.5); }
+    .dashboard-container .glow-destructive { --glow-color: hsl(var(--destructive) / 0.5); }
+    .dashboard-container .glow-warning { --glow-color: hsl(var(--warning) / 0.5); }
+    .dashboard-container .icon-container {
+        @apply relative w-12 h-12 rounded-lg flex items-center justify-center overflow-hidden;
+        background-color: var(--icon-bg-color, hsl(var(--primary) / 0.1));
+        border: 1px solid var(--icon-border-color, hsl(var(--primary) / 0.2));
+    }
+    .dashboard-container .icon-container::before {
+        content: '';
+        @apply absolute inset-0 opacity-50;
+        background-image:
+             linear-gradient(var(--grid-color, hsl(var(--primary) / 0.15)) 1px, transparent 1px),
+             linear-gradient(to right, var(--grid-color, hsl(var(--primary) / 0.15)) 1px, transparent 1px);
+        background-size: 8px 8px;
+    }
+    .dashboard-container .icon-container svg {
+        @apply w-6 h-6;
+        color: var(--icon-color, hsl(var(--primary)));
+        filter: drop-shadow(0 0 5px var(--icon-color, hsl(var(--primary) / 0.8)));
+    }
+    .dashboard-container .icon-primary {
+        --icon-bg-color: hsl(var(--primary) / 0.1);
+        --icon-border-color: hsl(var(--primary) / 0.2);
+        --grid-color: hsl(var(--primary) / 0.15);
+        --icon-color: hsl(var(--primary));
+    }
+    .dashboard-container .icon-destructive {
+        --icon-bg-color: hsl(var(--destructive) / 0.1);
+        --icon-border-color: hsl(var(--destructive) / 0.2);
+        --grid-color: hsl(var(--destructive) / 0.15);
+        --icon-color: hsl(var(--destructive));
+    }
+    .dashboard-container .icon-warning {
+        --icon-bg-color: hsl(var(--warning) / 0.1);
+        --icon-border-color: hsl(var(--warning) / 0.2);
+        --grid-color: hsl(var(--warning) / 0.15);
+        --icon-color: hsl(var(--warning));
+    }
+    .dashboard-container .btn-custom-primary {
+        @apply bg-primary text-primary-foreground shadow-lg shadow-primary/20 transition-all duration-300;
+    }
+    .dashboard-container .btn-custom-primary:hover {
+        @apply scale-105 shadow-primary/30;
+    }
+    .dashboard-container .timeline-select {
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        @apply bg-[#1A1A1A] border border-[#333333] rounded-lg py-1 pl-3 pr-8 text-sm text-gray-200;
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+        background-position: right 0.5rem center;
+        background-repeat: no-repeat;
+        background-size: 1.5em 1.5em;
+    }
+    /* SVG Animations */
+    @keyframes line-draw { to { stroke-dashoffset: 0; } }
+    .dashboard-container .animate-line-draw {
+      stroke-dasharray: 1000;
+      stroke-dashoffset: 1000;
+      animation: line-draw 1.5s ease-out 0.3s forwards;
+    }
+    @keyframes bar-rise {
+        from { transform: translateY(100%); opacity: 0; }
+        to { transform: translateY(0); opacity: 1; }
+    }
+    .dashboard-container .animate-bar-rise {
+        animation: bar-rise 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+    }
+}

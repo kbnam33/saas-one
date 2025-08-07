@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import DashboardApp from '@/pages/dashboard/Index'; // Make sure this path is correct
 
 // ==================================
 //      SVG VISUAL COMPONENTS (STICKY SCROLL)
@@ -241,11 +242,9 @@ function App() {
                       <Button size="lg" variant="secondary">Request a Demo</Button>
                   </div>
               </div>
-              <div className="mt-16 h-[300px] sm:h-[450px] w-full">
-                  <Card className="w-full h-full bg-transparent border border-border/10 rounded-2xl shadow-inner shadow-white/5">
-                      <CardContent className="p-4 h-full">
-                          {/* Placeholder for a hero visual */}
-                      </CardContent>
+              <div className="mt-16 w-full">
+                  <Card className="w-full bg-transparent border border-border/10 rounded-2xl shadow-inner shadow-white/5">
+                      <DashboardApp />
                   </Card>
               </div>
           </section>
