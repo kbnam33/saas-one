@@ -90,7 +90,7 @@ const features = [
 ];
 
 // ==================================
-//      SVG VISUAL COMPONENTS (FEATURE CARDS - NEW)
+//      SVG VISUAL COMPONENTS (FEATURE CARDS)
 // ==================================
 const AutomateFeatureCardVisual = () => (
     <svg viewBox="0 0 300 200" className="w-full h-full" aria-labelledby="automate-card-title" role="img">
@@ -135,6 +135,51 @@ const FocusFeatureCardVisual = () => (
 );
 
 // ==================================
+//      SVG VISUAL COMPONENTS (BENEFITS SECTION)
+// ==================================
+const BenefitOneVisual = () => (
+    <svg viewBox="0 0 400 300" className="w-full h-full" aria-labelledby="benefit-one-title" role="img">
+        <title id="benefit-one-title">Dashboard showing key growth metrics</title>
+        <rect width="400" height="300" rx="8" fill="hsl(var(--card) / 0.5)" />
+        <rect x="20" y="20" width="360" height="40" rx="4" fill="hsl(var(--muted) / 0.3)" />
+        <circle cx="45" cy="40" r="6" fill="hsl(var(--muted-foreground))" />
+        <rect x="60" y="35" width="100" height="10" rx="2" fill="hsl(var(--muted-foreground))" />
+        
+        <rect x="20" y="80" width="170" height="100" rx="4" fill="hsl(var(--muted) / 0.3)" />
+        <text x="35" y="100" fill="hsl(var(--muted-foreground))" className="text-sm">MRR Growth</text>
+        <text x="35" y="140" fill="hsl(var(--primary))" className="text-4xl font-bold">15%</text>
+
+        <rect x="210" y="80" width="170" height="100" rx="4" fill="hsl(var(--muted) / 0.3)" />
+        <text x="225" y="100" fill="hsl(var(--muted-foreground))" className="text-sm">New Customers</text>
+        <text x="225" y="140" fill="hsl(var(--foreground))" className="text-4xl font-bold">84</text>
+
+        <rect x="20" y="200" width="360" height="80" rx="4" fill="hsl(var(--muted) / 0.3)" />
+        <path d="M40 260 C 100 220, 180 250, 240 230 S 340 200, 380 210" stroke="hsl(var(--muted-foreground))" strokeWidth="2" fill="none" />
+    </svg>
+);
+
+const BenefitTwoVisual = () => (
+    <svg viewBox="0 0 400 300" className="w-full h-full" aria-labelledby="benefit-two-title" role="img">
+        <title id="benefit-two-title">Dashboard showing runway forecast</title>
+        <rect width="400" height="300" rx="8" fill="hsl(var(--card) / 0.5)" />
+        <rect x="20" y="20" width="360" height="40" rx="4" fill="hsl(var(--muted) / 0.3)" />
+        <circle cx="45" cy="40" r="6" fill="hsl(var(--muted-foreground))" />
+        <rect x="60" y="35" width="100" height="10" rx="2" fill="hsl(var(--muted-foreground))" />
+
+        <text x="40" y="100" fill="hsl(var(--muted-foreground))" className="text-lg">What's our current runway?</text>
+        <rect x="40" y="120" width="320" height="2" rx="1" fill="hsl(var(--border))" />
+        
+        <g transform="translate(40, 150)">
+            <circle cx="15" cy="15" r="10" fill="hsl(var(--primary) / 0.2)" />
+            <path d="M12 15 l3 3 l5 -5" stroke="hsl(var(--primary))" strokeWidth="2" fill="none" />
+            <text x="40" y="20" fill="hsl(var(--foreground))" className="text-lg">Your runway is</text>
+            <text x="160" y="20" fill="hsl(var(--primary))" className="text-lg font-bold">18 months</text>
+        </g>
+    </svg>
+);
+
+
+// ==================================
 //      MAIN APP COMPONENT
 // ==================================
 
@@ -142,6 +187,37 @@ function App() {
   const [activeFeatureIndex, setActiveFeatureIndex] = useState(0);
   const featureSectionRef = useRef(null);
   const [theme, setTheme] = useTheme();
+  const [benefitOneVisible, setBenefitOneVisible] = useState(false);
+  const [benefitTwoVisible, setBenefitTwoVisible] = useState(false);
+  const benefitOneRef = useRef(null);
+  const benefitTwoRef = useRef(null);
+
+  useEffect(() => {
+    const observerOptions = {
+      root: null,
+      rootMargin: '0px',
+      threshold: 0.5,
+    };
+
+    const observerCallback = (entries, setter) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setter(true);
+        }
+      });
+    };
+
+    const observer1 = new IntersectionObserver(entries => observerCallback(entries, setBenefitOneVisible), observerOptions);
+    const observer2 = new IntersectionObserver(entries => observerCallback(entries, setBenefitTwoVisible), observerOptions);
+
+    if (benefitOneRef.current) observer1.observe(benefitOneRef.current);
+    if (benefitTwoRef.current) observer2.observe(benefitTwoRef.current);
+
+    return () => {
+      if (benefitOneRef.current) observer1.unobserve(benefitOneRef.current);
+      if (benefitTwoRef.current) observer2.unobserve(benefitTwoRef.current);
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -162,7 +238,7 @@ function App() {
   }, [activeFeatureIndex]);
 
   return (
-    <div className="bg-background text-foreground">
+    <div className="bg-background text-foreground relative">
       <div className="max-w-7xl mx-auto px-6 py-4">
         <header className="flex justify-between items-center py-4">
           <h1 className="text-xl font-bold">[Your Logo]</h1>
@@ -177,24 +253,23 @@ function App() {
         </header>
 
         <main className="mt-16 md:mt-24">
-          <section id="hero" className="grid lg:grid-cols-2 gap-12 items-center">
-            <div className="text-left">
-              <Button variant="outline" className="mb-6">Built for Founders, by Founders</Button>
-              <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">Finance for Founders Who'd Rather Be Building.</h2>
-              <p className="mt-6 text-lg md:text-xl text-muted-foreground">Stop wrestling with spreadsheets. We automate your financial reporting so you can focus on your product.</p>
-              <div className="mt-8">
-                <Button size="lg" className="btn-custom-primary">Get Started for Free</Button>
-              </div>
-            </div>
-            <div className="hidden lg:block">
-              <Card className="glass-pane relative h-[450px]">
-                <CardContent className="p-4 h-full">
-                  <div className="w-full h-full bg-muted/50 rounded-lg flex items-center justify-center">
-                    <p className="text-muted-foreground">Product Mockup</p>
+          <section id="hero" className="relative text-left pt-24 pb-32">
+              <div className="hero-glow"></div>
+              <div className="max-w-3xl">
+                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">Finance for Founders Who'd Rather Be Building.</h2>
+                  <p className="mt-6 text-lg md:text-xl text-muted-foreground">Stop wrestling with spreadsheets. We automate your financial reporting so you can focus on your product.</p>
+                  <div className="mt-8 flex gap-4">
+                      <Button size="lg" className="btn-custom-primary">Get Started for Free</Button>
+                      <Button size="lg" variant="outline">Request a Demo</Button>
                   </div>
-                </CardContent>
-              </Card>
-            </div>
+              </div>
+              <div className="mt-16 h-[450px] w-full">
+                  <Card className="w-full h-full bg-transparent border border-border/10 rounded-2xl shadow-inner shadow-white/5">
+                      <CardContent className="p-4 h-full">
+                          {/* Content will go here later */}
+                      </CardContent>
+                  </Card>
+              </div>
           </section>
           
           <section id="social-proof" className="mt-32 md:mt-48">
@@ -274,6 +349,26 @@ function App() {
                                   ))}
                                </CardContent>
                            </Card>
+                      </div>
+                  </div>
+              </div>
+          </section>
+
+          <section id="benefits" className="relative mt-32 md:mt-48 pt-16 border-t border-border/10">
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-border/10"></div>
+              <div className="grid lg:grid-cols-2">
+                  <div ref={benefitOneRef} className={`relative transition-opacity duration-700 p-12 lg:border-r lg:border-border/10 ${benefitOneVisible ? 'opacity-100' : 'opacity-0'}`}>
+                      <h3 className="text-2xl font-bold tracking-tighter">Make Smarter Decisions</h3>
+                      <p className="mt-2 text-lg text-muted-foreground">Understand your growth drivers to scale your business.</p>
+                      <div className="mt-12 h-80">
+                          <BenefitOneVisual />
+                      </div>
+                  </div>
+                  <div ref={benefitTwoRef} className={`relative transition-opacity duration-700 delay-300 p-12 ${benefitTwoVisible ? 'opacity-100' : 'opacity-0'}`}>
+                      <h3 className="text-2xl font-bold tracking-tighter">Never Lose Sight of Your Runway</h3>
+                      <p className="mt-2 text-lg text-muted-foreground">Get an up-to-the-minute forecast so you can plan with confidence.</p>
+                      <div className="mt-12 h-80">
+                          <BenefitTwoVisual />
                       </div>
                   </div>
               </div>
