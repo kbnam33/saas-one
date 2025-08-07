@@ -8,10 +8,10 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        // Main CTA button: Off-white with green glow
-        primary: "bg-[hsl(var(--primary-button-background))] text-[hsl(var(--primary-button-text))] shadow-[0_0_16px_hsl(var(--primary)/0.5)] hover:shadow-[0_0_32px_hsl(var(--primary)/0.7)]",
-        // Secondary button: Transparent glass effect
-        secondary: "bg-white/5 border border-white/10 text-white/80 backdrop-blur-md hover:bg-white/10 hover:text-white",
+        // Main CTA: Green with glow effect
+        primary: "bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transform hover:scale-105",
+        // Secondary/Glass button: Transparent with blur
+        secondary: "bg-white/5 border border-white/10 text-muted-foreground backdrop-blur-md hover:bg-white/10 hover:text-foreground",
         ghost: "hover:bg-accent hover:text-accent-foreground",
       },
       size: {

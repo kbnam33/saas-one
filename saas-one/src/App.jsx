@@ -220,7 +220,7 @@ function App() {
           </nav>
           <div className="flex items-center gap-4">
             <Button variant="ghost">Login</Button>
-            <Button className="btn-custom-primary">Sign Up Now</Button>
+            <Button variant="primary">Sign Up Now</Button>
           </div>
         </header>
 
@@ -231,8 +231,8 @@ function App() {
                   <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">Finance for Founders Who'd Rather Be Building.</h2>
                   <p className="mt-6 text-lg md:text-xl text-muted-foreground">Stop wrestling with spreadsheets. We automate your financial reporting so you can focus on your product.</p>
                   <div className="mt-8 flex gap-4">
-                      <Button size="lg" className="btn-custom-primary">Get Started for Free</Button>
-                      <Button size="lg" variant="outline">Request a Demo</Button>
+                      <Button size="lg" variant="primary">Get Started for Free</Button>
+                      <Button size="lg" variant="secondary">Request a Demo</Button>
                   </div>
               </div>
               <div className="mt-16 h-[450px] w-full">
@@ -371,7 +371,7 @@ function App() {
                     <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Basic Cash Flow</li>
                     <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> 1 Bank Connection</li>
                   </ul>
-                  <Button className="mt-8 w-full btn-outline-dark">Get Started</Button>
+                  <Button variant="secondary" className="mt-8 w-full">Get Started</Button>
                 </CardContent>
               </Card>
 
@@ -391,7 +391,7 @@ function App() {
                     <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Unlimited Connections</li>
                     <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Priority Support</li>
                   </ul>
-                  <Button className="mt-8 w-full btn-custom-primary">Choose Pro</Button>
+                  <Button variant="primary" className="mt-8 w-full">Choose Pro</Button>
                 </CardContent>
               </Card>
 
@@ -409,7 +409,7 @@ function App() {
                     <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Dedicated Account Manager</li>
                     <li className="flex items-center gap-x-3"><span className="text-primary">✔</span> Custom Integrations</li>
                   </ul>
-                  <Button className="mt-8 w-full btn-outline-dark">Contact Sales</Button>
+                  <Button variant="secondary" className="mt-8 w-full">Contact Sales</Button>
                 </CardContent>
               </Card>
             </div>
@@ -420,7 +420,7 @@ function App() {
               <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">Ready to take control?</h2>
               <p className="mt-4 text-lg text-muted-foreground max-w-xl mx-auto">Stop guessing, start growing. Get a clear view of your startup's finances in minutes.</p>
               <div className="mt-8">
-                <Button size="lg" className="btn-custom-primary">Sign Up for Free</Button>
+                <Button size="lg" variant="primary">Sign Up for Free</Button>
               </div>
             </Card>
           </section>
@@ -430,7 +430,7 @@ function App() {
           <div className="flex justify-between items-center">
             <p className="text-muted-foreground">&copy; 2025 [Your Brand Name]. All rights reserved.</p>
             <div className="flex items-center gap-4">
-                <Button variant="outline" size="icon" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
+                <Button variant="ghost" size="icon" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
                     <svg className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
                     <svg className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
                     <span className="sr-only">Toggle theme</span>
