@@ -3,24 +3,6 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 
 // ==================================
-//      THEME TOGGLE COMPONENT
-// ==================================
-function useTheme() {
-  const [theme, setTheme] = useState(() => {
-    return localStorage.getItem('theme') || 'dark';
-  });
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.remove('light', 'dark');
-    root.classList.add(theme);
-    localStorage.setItem('theme', theme);
-  }, [theme]);
-
-  return [theme, setTheme];
-}
-
-// ==================================
 //      SVG VISUAL COMPONENTS (STICKY SCROLL)
 // ==================================
 
@@ -151,13 +133,34 @@ const FocusFeatureCardVisual = () => (
 );
 
 // ==================================
+//      NEW CTA ICON
+// ==================================
+const CompassIcon = (props) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+    {...props}
+  >
+    <circle cx="12" cy="12" r="10" />
+    <polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76" fill="hsl(var(--primary))" stroke="hsl(var(--primary))" />
+  </svg>
+);
+
+
+// ==================================
 //      MAIN APP COMPONENT
 // ==================================
 
 function App() {
   const [activeFeatureIndex, setActiveFeatureIndex] = useState(0);
   const featureSectionRef = useRef(null);
-  const [theme, setTheme] = useTheme();
   const [benefitOneVisible, setBenefitOneVisible] = useState(false);
   const [benefitTwoVisible, setBenefitTwoVisible] = useState(false);
   const benefitOneRef = useRef(null);
@@ -191,6 +194,9 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const isLg = window.matchMedia('(min-width: 1024px)').matches;
+    if (!isLg) return;
+
     const handleScroll = () => {
         const element = featureSectionRef.current;
         if (!element) return;
@@ -211,47 +217,48 @@ function App() {
 
   return (
     <div className="bg-background text-foreground relative">
-      <div className="max-w-7xl mx-auto px-6 py-4">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <header className="flex justify-between items-center py-4">
           <h1 className="text-xl font-bold">[Your Logo]</h1>
           <nav className="hidden md:flex items-center space-x-6">
             <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">Features</a>
             <a href="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">Pricing</a>
           </nav>
-          <div className="flex items-center gap-4">
-            <Button variant="ghost">Login</Button>
-            <Button variant="primary">Sign Up Now</Button>
+          <div className="flex items-center gap-2 sm:gap-4">
+            <Button variant="ghost" size="sm" className="px-2 sm:px-4">Login</Button>
+            <Button variant="primary" size="sm" className="px-3 sm:px-6">Sign Up</Button>
           </div>
         </header>
 
         <main className="mt-16 md:mt-24">
-          <section id="hero" className="relative text-left pt-24 pb-32">
+          <section id="hero" className="relative text-center lg:text-left pt-16 pb-24 sm:pt-24 sm:pb-32">
               <div className="hero-glow"></div>
-              <div className="max-w-3xl">
-                  <h2 className="text-4xl md:text-6xl font-bold tracking-tighter">Finance for Founders Who'd Rather Be Building.</h2>
-                  <p className="mt-6 text-lg md:text-xl text-muted-foreground">Stop wrestling with spreadsheets. We automate your financial reporting so you can focus on your product.</p>
-                  <div className="mt-8 flex gap-4">
+              <div className="max-w-3xl mx-auto lg:mx-0">
+                  <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter">Finance for Founders Who'd Rather Be Building.</h2>
+                  <p className="mt-6 text-lg md:text-xl text-muted-foreground">Swap spreadsheet chaos for automated clarity. See your real-time revenue, cash flow, and runway in one place.</p>
+                  <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
                       <Button size="lg" variant="primary">Get Started for Free</Button>
                       <Button size="lg" variant="secondary">Request a Demo</Button>
                   </div>
               </div>
-              <div className="mt-16 h-[450px] w-full">
+              <div className="mt-16 h-[300px] sm:h-[450px] w-full">
                   <Card className="w-full h-full bg-transparent border border-border/10 rounded-2xl shadow-inner shadow-white/5">
                       <CardContent className="p-4 h-full">
-                          {/* Content will go here later */}
+                          {/* Placeholder for a hero visual */}
                       </CardContent>
                   </Card>
               </div>
           </section>
           
-          <section id="social-proof" className="mt-32 md:mt-48">
+          <section id="social-proof" className="mt-24 md:mt-32">
             <div className="text-center">
               <h3 className="text-lg text-muted-foreground">Trusted by the best teams in the world</h3>
-              <div className="mt-8 flex justify-center items-center gap-x-8 md:gap-x-12 opacity-70">
+              <div className="mt-8 flex justify-center items-center gap-x-6 sm:gap-x-8 md:gap-x-12 opacity-70 flex-wrap">
                 <div className="w-28 h-12 flex items-center justify-center text-2xl font-bold">Logoipsum</div>
                 <div className="w-28 h-12 flex items-center justify-center text-2xl font-bold">Synergy</div>
-                <div className="w-28 h-12 hidden sm:flex items-center justify-center text-2xl font-bold">Innovate</div>
-                <div className="w-28 h-12 hidden md:flex items-center justify-center text-2xl font-bold">Quantum</div>
+                <div className="w-28 h-12 flex items-center justify-center text-2xl font-bold">Innovate</div>
+                <div className="w-28 h-12 hidden sm:flex items-center justify-center text-2xl font-bold">Quantum</div>
+                <div className="w-28 h-12 hidden lg:flex items-center justify-center text-2xl font-bold">Apex</div>
               </div>
             </div>
           </section>
@@ -263,8 +270,8 @@ function App() {
               </div>
               <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
                   <Card className="feature-card">
-                      <CardContent className="p-8 h-full flex flex-col items-start text-left">
-                          <div className="h-48 w-full flex-grow flex items-center justify-center">
+                      <CardContent className="p-6 sm:p-8 h-full flex flex-col items-start text-left">
+                          <div className="h-40 sm:h-48 w-full flex-grow flex items-center justify-center">
                               <AutomateFeatureCardVisual />
                           </div>
                           <h3 className="mt-6 text-xl font-bold">Automate the Tedious</h3>
@@ -272,8 +279,8 @@ function App() {
                       </CardContent>
                   </Card>
                   <Card className="feature-card">
-                      <CardContent className="p-8 h-full flex flex-col items-start text-left">
-                          <div className="h-48 w-full flex-grow flex items-center justify-center">
+                      <CardContent className="p-6 sm:p-8 h-full flex flex-col items-start text-left">
+                          <div className="h-40 sm:h-48 w-full flex-grow flex items-center justify-center">
                               <ClarityFeatureCardVisual />
                           </div>
                           <h3 className="mt-6 text-xl font-bold">Clarity in Real-Time</h3>
@@ -281,8 +288,8 @@ function App() {
                       </CardContent>
                   </Card>
                   <Card className="feature-card">
-                      <CardContent className="p-8 h-full flex flex-col items-start text-left">
-                          <div className="h-48 w-full flex-grow flex items-center justify-center">
+                      <CardContent className="p-6 sm:p-8 h-full flex flex-col items-start text-left">
+                          <div className="h-40 sm:h-48 w-full flex-grow flex items-center justify-center">
                               <FocusFeatureCardVisual />
                           </div>
                           <h3 className="mt-6 text-xl font-bold">Focus on Building</h3>
@@ -292,32 +299,32 @@ function App() {
               </div>
           </section>
 
-          <section ref={featureSectionRef} id="features" className="relative h-[300vh] mt-32 md:mt-48">
-              <div className="sticky top-0 flex h-screen items-center">
-                  <div className="grid lg:grid-cols-2 gap-24 items-start max-w-7xl mx-auto w-full">
-                      <div className="flex flex-col gap-12 pt-8 lg:pt-0">
-                          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">Everything you need. <br /> Nothing you don't.</h2>
+          <section ref={featureSectionRef} id="features" className="relative h-auto lg:h-[300vh] mt-32 md:mt-48">
+              <div className="relative lg:sticky top-0 flex h-auto lg:h-screen items-center">
+                  <div className="grid lg:grid-cols-2 gap-12 lg:gap-24 items-start max-w-7xl mx-auto w-full">
+                      <div className="flex flex-col gap-8 lg:gap-12 pt-8 lg:pt-0">
+                          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">Everything you need. <br /> Nothing you don't.</h2>
                           {features.map((feature, index) => (
-                            <div key={feature.id} className="relative pl-8">
+                            <div key={feature.id} className="relative pl-8" onClick={() => setActiveFeatureIndex(index)}>
                               <div className={`absolute left-0 top-1 h-3 w-3 rounded-full transition-all duration-300 ${activeFeatureIndex === index ? 'bg-foreground scale-110' : 'bg-muted-foreground/50'}`}>
                                 {activeFeatureIndex === index && (
                                   <div className="absolute -inset-1.5 rounded-full bg-foreground/30 blur-lg"></div>
                                 )}
                               </div>
-                              <h3 className={`font-bold text-2xl transition-colors duration-300 ${activeFeatureIndex === index ? 'text-foreground' : 'text-muted-foreground/80'}`}>
+                              <h3 className={`font-bold text-xl lg:text-2xl transition-colors duration-300 ${activeFeatureIndex === index ? 'text-foreground' : 'text-muted-foreground/80'}`}>
                                 {feature.title}
                               </h3>
-                              <div className={`transition-[max-height,opacity,margin] duration-500 ease-in-out overflow-hidden ${activeFeatureIndex === index ? 'max-h-40 opacity-100 mt-2' : 'max-h-0 opacity-0'}`}>
-                                <p className="text-lg text-muted-foreground">{feature.description}</p>
+                              <div className={`transition-[max-height,opacity,margin] duration-500 ease-in-out overflow-hidden ${activeFeatureIndex === index ? 'max-h-40 opacity-100 mt-2' : 'max-h-0 lg:max-h-40 opacity-0 lg:opacity-100'}`}>
+                                <p className="text-base lg:text-lg text-muted-foreground">{feature.description}</p>
                               </div>
                             </div>
                           ))}
                       </div>
-                      <div className="relative h-[550px] w-full">
+                      <div className="relative h-[400px] lg:h-[550px] w-full">
                            <div className="feature-display-screen">
                                <div className="feature-display-content">
                                   {features.map((feature, index) => (
-                                      <div key={`${feature.id}-visual`} className={`absolute inset-0 p-8 transition-opacity duration-300 ${activeFeatureIndex === index ? 'opacity-100' : 'opacity-0'}`}>
+                                      <div key={`${feature.id}-visual`} className={`absolute inset-0 p-4 sm:p-8 transition-opacity duration-300 ${activeFeatureIndex === index ? 'opacity-100' : 'opacity-0'}`}>
                                           {React.cloneElement(feature.visual, { is_active: activeFeatureIndex === index })}
                                       </div>
                                   ))}
@@ -326,24 +333,24 @@ function App() {
                       </div>
                   </div>
               </div>
-              <div className="h-px w-full bg-border/20 absolute bottom-0" />
+              <div className="h-px w-full bg-border/20 absolute bottom-0 hidden lg:block" />
           </section>
 
           <section id="benefits" className="relative mt-32 md:mt-48 pt-16">
               <div className="h-px w-full bg-border/20 absolute top-0" />
               <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-border/20"></div>
               <div className="grid lg:grid-cols-2">
-                  <div ref={benefitOneRef} className={`relative transition-opacity duration-700 p-12 lg:border-r lg:border-border/20 ${benefitOneVisible ? 'opacity-100' : 'opacity-0'}`}>
+                  <div ref={benefitOneRef} className={`relative transition-opacity duration-700 p-6 sm:p-12 lg:border-r lg:border-border/20 ${benefitOneVisible ? 'opacity-100' : 'opacity-0'}`}>
                       <h3 className="text-2xl font-bold tracking-tighter">Make Smarter Decisions</h3>
                       <p className="mt-2 text-lg text-muted-foreground">Understand your growth drivers to scale your business.</p>
-                      <div className="mt-12 flex items-start justify-start">
+                      <div className="mt-12 flex items-start justify-center lg:justify-start">
                           <img src="/Smart decisions.svg" alt="Dashboard showing key growth metrics" className="w-full h-auto max-w-md" />
                       </div>
                   </div>
-                  <div ref={benefitTwoRef} className={`relative transition-opacity duration-700 delay-300 p-12 ${benefitTwoVisible ? 'opacity-100' : 'opacity-0'}`}>
+                  <div ref={benefitTwoRef} className={`relative transition-opacity duration-700 delay-300 p-6 sm:p-12 ${benefitTwoVisible ? 'opacity-100' : 'opacity-0'}`}>
                       <h3 className="text-2xl font-bold tracking-tighter">Never Lose Sight of Your Runway</h3>
                       <p className="mt-2 text-lg text-muted-foreground">Get an up-to-the-minute forecast so you can plan with confidence.</p>
-                      <div className="mt-12 flex items-start justify-start">
+                      <div className="mt-12 flex items-start justify-center lg:justify-start">
                           <img src="/Sight of runway.svg" alt="Dashboard showing runway forecast" className="w-full h-auto max-w-md" />
                       </div>
                   </div>
@@ -351,11 +358,11 @@ function App() {
           </section>
 
           <section id="pricing" className="mt-32 md:mt-48">
-            <div className="text-center">
+            <div className="text-center max-w-2xl mx-auto">
               <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">Simple, transparent pricing</h2>
               <p className="mt-4 text-lg text-muted-foreground">Choose the plan that's right for your stage.</p>
             </div>
-            <div className="mt-16 grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-sm mx-auto md:max-w-none">
               <Card className="flex flex-col card-darker">
                 <CardHeader>
                   <CardTitle>Hobby</CardTitle>
@@ -395,7 +402,7 @@ function App() {
                 </CardContent>
               </Card>
 
-              <Card className="flex flex-col card-darker">
+              <Card className="flex flex-col card-darker md:col-span-2 lg:col-span-1 max-w-sm mx-auto md:max-w-none">
                 <CardHeader>
                   <CardTitle>Enterprise</CardTitle>
                   <CardDescription>For established teams with custom needs.</CardDescription>
@@ -415,27 +422,39 @@ function App() {
             </div>
           </section>
 
-          <section id="cta" className="mt-32 md:mt-48 text-center">
-            <Card className="glass-pane relative p-12">
-              <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">Ready to take control?</h2>
-              <p className="mt-4 text-lg text-muted-foreground max-w-xl mx-auto">Stop guessing, start growing. Get a clear view of your startup's finances in minutes.</p>
-              <div className="mt-8">
-                <Button size="lg" variant="primary">Sign Up for Free</Button>
-              </div>
+          <section id="cta" className="mt-32 md:mt-48">
+            <Card className="glass-pane relative p-8 sm:p-12 lg:p-16 overflow-hidden">
+                {/* Subtle background glow */}
+                <div className="absolute -bottom-24 -left-24 w-72 h-72 bg-primary/10 rounded-full blur-3xl -z-10" />
+
+                <div className="flex flex-col lg:flex-row justify-between items-center gap-x-12 gap-y-8">
+                    {/* Left side: Icon + Text */}
+                    <div className="flex-1 flex flex-col lg:flex-row items-center gap-6 text-center lg:text-left">
+                        <div className="text-primary/30 flex-shrink-0">
+                            <CompassIcon className="w-20 h-20 lg:w-24 lg:h-24" />
+                        </div>
+                        <div>
+                            <h2 className="text-3xl md:text-4xl font-bold tracking-tighter">Ready to take control?</h2>
+                            <p className="mt-2 text-lg text-muted-foreground max-w-xl mx-auto lg:mx-0">
+                                Swap spreadsheet chaos for automated clarity. See your real-time revenue, cash flow, and runway in one place.
+                            </p>
+                        </div>
+                    </div>
+
+                    {/* Right side: Button */}
+                    <div className="flex-shrink-0">
+                        <Button size="lg" variant="primary">
+                            Sign Up for Free
+                        </Button>
+                    </div>
+                </div>
             </Card>
           </section>
         </main>
 
         <footer className="mt-24 py-8 border-t">
-          <div className="flex justify-between items-center">
-            <p className="text-muted-foreground">&copy; 2025 [Your Brand Name]. All rights reserved.</p>
-            <div className="flex items-center gap-4">
-                <Button variant="ghost" size="icon" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')}>
-                    <svg className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
-                    <svg className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
-                    <span className="sr-only">Toggle theme</span>
-                </Button>
-            </div>
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+            <p className="text-muted-foreground text-sm text-center sm:text-left">&copy; 2025 [Your Brand Name]. All rights reserved.</p>
           </div>
         </footer>
       </div>
