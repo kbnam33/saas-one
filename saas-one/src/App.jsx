@@ -226,8 +226,9 @@ function App() {
         const { top, height } = element.getBoundingClientRect();
         const scrollableHeight = height - window.innerHeight;
         if (top <= 0 && top > -scrollableHeight) {
-            const progress = Math.abs(top) / (scrollableHeight / (features.length -1));
-            let newIndex = Math.round(progress);
+            const progress = Math.abs(top) / (scrollableHeight / (features.length));
+            let newIndex = Math.floor(progress);
+            newIndex = Math.min(newIndex, features.length - 1);
             if (newIndex !== activeFeatureIndex) {
               setActiveFeatureIndex(newIndex);
             }
@@ -322,40 +323,42 @@ function App() {
 
           <section ref={featureSectionRef} id="features" className="relative h-[300vh] mt-32 md:mt-48">
               <div className="sticky top-0 flex h-screen items-center">
-                  <div className="grid lg:grid-cols-2 gap-24 items-center max-w-7xl mx-auto w-full">
-                      <div className="text-left">
-                          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-8">Everything you need. <br /> Nothing you don't.</h2>
-                          <div className="flex flex-col gap-4">
-                              {features.map((feature, index) => (
-                                <React.Fragment key={feature.id}>
-                                  <div className={`transition-opacity duration-300 ${activeFeatureIndex === index ? 'opacity-100' : 'opacity-50'}`}>
-                                      <h3 className="text-2xl font-bold">{feature.title}</h3>
-                                      <p className="mt-2 text-lg text-muted-foreground">{feature.description}</p>
-                                  </div>
-                                  {index < features.length - 1 && (
-                                    <hr className="border-border/20 my-4" />
-                                  )}
-                                </React.Fragment>
-                              ))}
-                          </div>
+                  <div className="grid lg:grid-cols-2 gap-24 items-start max-w-7xl mx-auto w-full">
+                      <div className="flex flex-col gap-12 pt-8 lg:pt-0">
+                          <h2 className="text-3xl md:text-4xl font-bold tracking-tighter mb-4">Everything you need. <br /> Nothing you don't.</h2>
+                          {features.map((feature, index) => (
+                            <div key={feature.id} className="relative pl-8">
+                              <div className={`absolute left-0 top-1 h-3 w-3 rounded-full transition-all duration-300 ${activeFeatureIndex === index ? 'bg-foreground scale-110' : 'bg-muted-foreground/50'}`}>
+                                {activeFeatureIndex === index && (
+                                  <div className="absolute -inset-1.5 rounded-full bg-foreground/30 blur-lg"></div>
+                                )}
+                              </div>
+                              <h3 className={`font-bold text-2xl transition-colors duration-300 ${activeFeatureIndex === index ? 'text-foreground' : 'text-muted-foreground/80'}`}>
+                                {feature.title}
+                              </h3>
+                              <div className={`transition-[max-height,opacity,margin] duration-500 ease-in-out overflow-hidden ${activeFeatureIndex === index ? 'max-h-40 opacity-100 mt-2' : 'max-h-0 opacity-0'}`}>
+                                <p className="text-lg text-muted-foreground">{feature.description}</p>
+                              </div>
+                            </div>
+                          ))}
                       </div>
                       <div className="relative h-[550px] w-full">
-                           <Card className="glass-pane absolute inset-0">
-                               <CardContent className="p-0 h-full w-full">
+                           <div className="feature-display-screen">
+                               <div className="feature-display-content">
                                   {features.map((feature, index) => (
                                       <div key={`${feature.id}-visual`} className={`absolute inset-0 p-8 transition-opacity duration-300 ${activeFeatureIndex === index ? 'opacity-100' : 'opacity-0'}`}>
                                           {React.cloneElement(feature.visual, { is_active: activeFeatureIndex === index })}
                                       </div>
                                   ))}
-                               </CardContent>
-                           </Card>
+                               </div>
+                           </div>
                       </div>
                   </div>
               </div>
+              <div className="h-px w-full bg-border/10 absolute bottom-0" />
           </section>
 
-          <section id="benefits" className="relative mt-32 md:mt-48 pt-16 border-t border-border/10">
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 w-px h-16 bg-border/10"></div>
+          <section id="benefits" className="relative mt-32 md:mt-48 pt-16">
               <div className="grid lg:grid-cols-2">
                   <div ref={benefitOneRef} className={`relative transition-opacity duration-700 p-12 lg:border-r lg:border-border/10 ${benefitOneVisible ? 'opacity-100' : 'opacity-0'}`}>
                       <h3 className="text-2xl font-bold tracking-tighter">Make Smarter Decisions</h3>

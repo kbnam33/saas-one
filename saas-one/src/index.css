@@ -131,6 +131,45 @@
     .feature-card:hover {
         @apply transform-gpu scale-[1.02];
     }
+    
+    /* REFINED v5: Final Feature Display Screen */
+    .feature-display-screen {
+        @apply relative w-full h-full rounded-2xl overflow-hidden;
+    }
+
+    /* The fading gradient border */
+    .dark .feature-display-screen::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(to bottom, hsl(var(--border) / 0.6), transparent 70%);
+        -webkit-mask:
+            linear-gradient(#fff 0 0) content-box,
+            linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        mask-composite: exclude;
+        pointer-events: none;
+    }
+
+    /* New, cleaner "glassy glow" at the top */
+    .dark .feature-display-screen::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 50%; /* Restrict glow to top half */
+        background: radial-gradient(ellipse 100% 70% at 50% 0%, hsl(0 0% 100% / 0.08), transparent);
+        pointer-events: none;
+    }
+
+    .feature-display-content {
+        @apply w-full h-full relative z-10;
+        -webkit-mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+        mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+    }
 }
 
 /* ==================================
