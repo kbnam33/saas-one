@@ -10,7 +10,7 @@
     --card-foreground: 222.2 84% 4.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
-    --primary: 150 95% 42%; /* New Vibrant Green */
+    --primary: 150 95% 42%; /* Vibrant Green */
     --primary-foreground: 150 40% 98%;
     --secondary: 210 40% 96.1%;
     --secondary-foreground: 222.2 47.4% 11.2%;
@@ -22,8 +22,8 @@
     --destructive-foreground: 210 40% 98%;
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-    --ring: 150 95% 42%; /* New Vibrant Green */
-    --radius: 0.5rem;
+    --ring: 150 95% 42%;
+    --radius: 0.75rem; /* Slightly larger radius */
   }
 
   .dark {
@@ -45,7 +45,7 @@
     --destructive-foreground: 0 0% 98%;
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
-    --ring: 150 80% 50%; /* Brighter Green */
+    --ring: 150 80% 50%;
   }
 }
 
@@ -55,6 +55,8 @@
   }
   body {
     @apply bg-background text-foreground;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
   .dark body {
     background-image: radial-gradient(circle at top, hsl(0 0% 10%) 0%, hsl(var(--background)) 35%);
@@ -66,44 +68,92 @@
     .btn-custom-primary {
         @apply bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transition-all duration-300 transform hover:scale-105;
     }
+
+    .glass-pane {
+        @apply backdrop-blur-xl shadow-2xl shadow-black/20;
+        /* Default (Light Theme) styles */
+        @apply bg-white/50 border border-black/10;
+        /* Dark Theme overrides */
+        @apply dark:bg-white/5 dark:border-white/10;
+    }
 }
 
-/* New Animation Styles */
-@keyframes fade-in {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
+/* ==================================
+//      SVG ANIMATIONS
+// ================================== */
 
 @keyframes line-draw {
   to { stroke-dashoffset: 0; }
 }
 
+@keyframes area-fill {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
 @keyframes point-fade-in {
+  from { opacity: 0; transform: scale(0.5); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes point-move {
   from { opacity: 0; }
   to { opacity: 1; }
 }
 
 @keyframes bar-rise {
-  from { transform: scaleY(0); }
-  to { transform: scaleY(1); }
+    from { transform: scaleY(0); }
+    to { transform: scaleY(1); }
 }
 
-.animate-fade-in {
-  animation: fade-in 0.8s ease-in-out forwards;
+@keyframes bar-rise-x {
+    from { transform: scaleX(0); }
+    to { transform: scaleX(1); }
+}
+
+@keyframes text-fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 .animate-line-draw {
   stroke-dasharray: 1000;
   stroke-dashoffset: 1000;
-  animation: line-draw 1.5s ease-out 0.3s forwards;
+  animation: line-draw 1.5s ease-out forwards 0.3s;
+}
+
+.animate-forecast-draw {
+  stroke-dasharray: 1000;
+  stroke-dashoffset: 1000;
+  animation: line-draw 1.5s ease-out 1s forwards; /* Delayed start */
+}
+
+.animate-area-fill {
+  transform-origin: bottom;
+  animation: area-fill 1.2s ease-in-out forwards 0.3s;
 }
 
 .animate-point-fade-in {
   opacity: 0;
-  animation: point-fade-in 0.5s ease-in 1.8s forwards;
+  transform: scale(0.5);
+  animation: point-fade-in 0.5s cubic-bezier(0.68, -0.55, 0.27, 1.55) 1.5s forwards;
+}
+
+.animate-point-move {
+  animation: point-move 0.5s ease-in forwards 1.2s;
 }
 
 .animate-bar-rise {
   transform-origin: bottom;
-  animation: bar-rise 1.2s ease-out 0.3s forwards;
+  animation: bar-rise 1s ease-out forwards;
+}
+
+.animate-bar-rise-x {
+  transform-origin: left;
+  animation: bar-rise-x 1s ease-out forwards 0.5s;
+}
+
+.animate-text-fade-in {
+  opacity: 0;
+  animation: text-fade-in 0.5s ease-in 0.3s forwards;
 }
