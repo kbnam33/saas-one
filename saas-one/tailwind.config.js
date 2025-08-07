@@ -7,6 +7,25 @@ export default {
   ],
   theme: {
   	extend: {
+      animation: {
+        aurora: "aurora 60s linear infinite",
+        "button-glow": "button-glow 4s linear infinite",
+      },
+      keyframes: {
+        aurora: {
+          from: {
+            backgroundPosition: "50% 50%, 50% 50%",
+          },
+          to: {
+            backgroundPosition: "350% 50%, 350% 50%",
+          },
+        },
+        "button-glow": {
+            "0%": { transform: "translateX(-100%)" },
+            "50%": { transform: "translateX(100%)" },
+            "100%": { transform: "translateX(-100%)" },
+        }
+      },
   		fontFamily: {
   			sans: [
   				'Inter',
@@ -18,11 +37,6 @@ export default {
   			]
   		},
   		colors: {
-  			'brand-dark': '#0A0A0A',
-  			'brand-light': '#F5F5F5',
-  			'brand-muted': '#A1A1AA',
-  			'brand-accent': '#2DD4BF',
-  			'brand-success': '#4ADE80',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {
@@ -56,19 +70,12 @@ export default {
   			border: 'hsl(var(--border))',
   			input: 'hsl(var(--input))',
   			ring: 'hsl(var(--ring))',
-  			chart: {
-  				'1': 'hsl(var(--chart-1))',
-  				'2': 'hsl(var(--chart-2))',
-  				'3': 'hsl(var(--chart-3))',
-  				'4': 'hsl(var(--chart-4))',
-  				'5': 'hsl(var(--chart-5))'
-  			}
   		},
   		borderRadius: {
-  			lg: 'var(--radius)',
-  			md: 'calc(var(--radius) - 2px)',
-  			sm: 'calc(var(--radius) - 4px)'
-  		}
+            lg: "0.75rem",
+            md: "calc(0.75rem - 2px)",
+            sm: "calc(0.75rem - 4px)",
+        },
   	}
   },
   plugins: [require("tailwindcss-animate")],
