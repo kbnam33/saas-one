@@ -52,7 +52,7 @@ const Cashflow = () => {
                 <p className="text-white/50 text-sm mb-4">A visual overview of your monthly expenses.</p>
                 <SpendingBreakdownChart />
             </div>
-            <div className="glass-pane p-6">
+            <div className="glass-pane card-darker p-6">
                 <h3 className="text-white/90 text-lg font-semibold">Transactions</h3>
                 <p className="text-white/50 text-sm mb-4">All transactions from your connected accounts.</p>
                 <ul className="divide-y divide-white/10">

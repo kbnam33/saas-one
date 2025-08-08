@@ -36,12 +36,21 @@
     @apply bg-background text-foreground;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-image: radial-gradient(circle at top, hsl(0 0% 7%) 0%, hsl(var(--background)) 40%);
-    background-repeat: no-repeat;
   }
 }
 
 @layer components {
+    .background-grid {
+        @apply absolute inset-0 -z-10 h-full w-full;
+        background-image: linear-gradient(to right, hsl(var(--border) / 0.1) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border) / 0.1) 1px, transparent 1px);
+        background-size: 32px 32px;
+    }
+
+    .background-glow {
+        @apply absolute top-0 left-0 -z-10 h-full w-full;
+        background: radial-gradient(ellipse 80% 50% at 50% 0%, hsl(var(--primary) / 0.1), transparent);
+    }
+
     .hero-glow {
         @apply absolute top-0 left-1/2 -translate-x-1/2 w-[150%] h-[500px] -z-10;
         background: radial-gradient(ellipse at 50% 0%, hsl(var(--primary) / 0.15) 0%, transparent 50%);

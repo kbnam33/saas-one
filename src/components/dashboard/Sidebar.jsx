@@ -12,7 +12,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
     return (
         <div className="w-64 p-4 border-r border-white/10 flex flex-col justify-between flex-shrink-0">
             <div>
-                <h1 className="text-2xl font-bold text-white mb-10">[Your Logo]</h1>
+                <h1 className="text-2xl font-bold text-white mb-10">Arc</h1>
                 <nav className="flex flex-col space-y-2">
                     {navItems.map(item => (
                         <Button
@@ -27,7 +27,7 @@ const Sidebar = ({ activeView, setActiveView }) => {
                     ))}
                 </nav>
             </div>
-            <div className="text-center"><p className="text-white/50 text-xs">© 2025 [Your Brand Name]</p></div>
+            <div className="text-center"><p className="text-white/50 text-xs">© 2025 Arc</p></div>
         </div>
     );
 };

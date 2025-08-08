@@ -66,7 +66,7 @@ const Dashboard = () => {
                 <StatCard icon={<BurnIcon />} title="Net Burn (30d)" value="-$15,120" change="Burn is up 35%" changeColor="text-yellow-400" glowClass="glow-warning" iconClass="icon-warning" />
                 <StatCard icon={<MRRIcon />} title="MRR" value="$12,400" change="+$1.2k this month" changeColor="text-green-400" glowClass="glow-primary" iconClass="icon-primary" />
             </div>
-            <div className="glass-pane p-6">
+            <div className="glass-pane card-darker p-6">
                 <div className="flex justify-between items-center mb-4">
                     <div>
                         <h3 className="text-white/90 text-lg font-semibold">Business Heartbeat</h3>
@@ -81,7 +81,7 @@ const Dashboard = () => {
                 </div>
                 <HeartbeatChart timeline={timeline} />
             </div>
-             <div className="glass-pane p-6">
+             <div className="glass-pane card-darker p-6">
                 <h3 className="text-white/90 text-lg font-semibold">Recent Activity</h3>
                 <ul className="divide-y divide-white/10 mt-4">
                     <li className="py-3 flex justify-between items-center"><span className="text-white/80">Stripe Payout</span><span className="font-mono text-green-400">+$8,250.00</span></li>

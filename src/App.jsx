@@ -218,9 +218,11 @@ function App() {
 
   return (
     <div className="bg-background text-foreground relative">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="background-grid"></div>
+      <div className="background-glow"></div>
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <header className="flex justify-between items-center py-4">
-          <h1 className="text-xl font-bold">[Your Logo]</h1>
+          <h1 className="text-xl font-bold">Arc</h1>
           <nav className="hidden md:flex items-center space-x-6">
             <a href="#features" className="text-muted-foreground hover:text-foreground transition-colors">Features</a>
             <a href="#pricing" className="text-muted-foreground hover:text-foreground transition-colors">Pricing</a>
@@ -233,13 +235,11 @@ function App() {
 
         <main className="mt-16 md:mt-24">
           <section id="hero" className="relative text-center lg:text-left pt-16 pb-24 sm:pt-24 sm:pb-32">
-              <div className="hero-glow"></div>
               <div className="max-w-3xl mx-auto lg:mx-0">
                   <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter">Finance for Founders Who'd Rather Be Building.</h2>
                   <p className="mt-6 text-lg md:text-xl text-muted-foreground">Swap spreadsheet chaos for automated clarity. See your real-time revenue, cash flow, and runway in one place.</p>
                   <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
                       <Button size="lg" variant="primary">Get Started for Free</Button>
-                      <Button size="lg" variant="secondary">Request a Demo</Button>
                   </div>
               </div>
               <div className="mt-16 w-full">
@@ -453,7 +453,7 @@ function App() {
 
         <footer className="mt-24 py-8 border-t">
           <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
-            <p className="text-muted-foreground text-sm text-center sm:text-left">&copy; 2025 [Your Brand Name]. All rights reserved.</p>
+            <p className="text-muted-foreground text-sm text-center sm:text-left">&copy; 2025 Arc. All rights reserved.</p>
           </div>
         </footer>
       </div>
