@@ -313,7 +313,7 @@ function App() {
                               <h3 className={`font-bold text-xl lg:text-2xl transition-colors duration-300 ${activeFeatureIndex === index ? 'text-foreground' : 'text-muted-foreground/80'}`}>
                                 {feature.title}
                               </h3>
-                              <div className={`transition-[max-height,opacity,margin] duration-500 ease-in-out overflow-hidden ${activeFeatureIndex === index ? 'max-h-40 opacity-100 mt-2' : 'max-h-0 lg:max-h-40 opacity-0 lg:opacity-100'}`}>
+                              <div className={`transition-all duration-500 ease-in-out overflow-hidden ${activeFeatureIndex === index ? 'max-h-40 opacity-100 mt-2' : 'max-h-0 opacity-0'}`}>
                                 <p className="text-base lg:text-lg text-muted-foreground">{feature.description}</p>
                               </div>
                             </div>
