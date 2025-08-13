@@ -8,8 +8,8 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        // Main CTA: Green with glow effect
-        primary: "bg-primary text-primary-foreground shadow-lg shadow-primary/20 hover:bg-primary/90 transform hover:scale-105",
+        // Updated Primary Button: Transparent with inner shadow, original green glow on hover
+        primary: "bg-transparent border border-white/10 text-white/90 shadow-[inset_0_0_12px_rgba(255,255,255,0.1)] hover:bg-primary hover:text-primary-foreground hover:shadow-lg hover:shadow-primary/20",
         // Secondary/Glass button: Transparent with blur
         secondary: "bg-white/5 border border-white/10 text-muted-foreground backdrop-blur-md hover:bg-white/10 hover:text-foreground",
         ghost: "hover:bg-accent hover:text-accent-foreground",

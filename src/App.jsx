@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import DashboardApp from '@/pages/dashboard/Index'; // Make sure this path is correct
+import DashboardApp from '@/pages/dashboard/Index';
 
 // ==================================
 //      SVG VISUAL COMPONENTS (STICKY SCROLL)
@@ -166,6 +166,25 @@ function App() {
   const [benefitTwoVisible, setBenefitTwoVisible] = useState(false);
   const benefitOneRef = useRef(null);
   const benefitTwoRef = useRef(null);
+  // State to track if the screen is small
+  const [isSmallScreen, setIsSmallScreen] = useState(false);
+
+  useEffect(() => {
+    // Function to check screen size
+    const checkScreenSize = () => {
+      // Set isSmallScreen to true if window width is less than 1024px
+      setIsSmallScreen(window.innerWidth < 1024);
+    };
+
+    // Check screen size on initial render
+    checkScreenSize();
+
+    // Add event listener for window resize
+    window.addEventListener('resize', checkScreenSize);
+
+    // Cleanup event listener on component unmount
+    return () => window.removeEventListener('resize', checkScreenSize);
+  }, []);
 
   useEffect(() => {
     const observerOptions = {
@@ -244,7 +263,12 @@ function App() {
               </div>
               <div className="mt-16 w-full">
                   <Card className="w-full bg-transparent border border-border/10 rounded-2xl shadow-inner shadow-white/5">
-                      <DashboardApp />
+                      {/* Conditional rendering for the dashboard */}
+                      {isSmallScreen ? (
+                        <img src="/Dashboard.png" alt="Dashboard Preview" className="w-full h-auto rounded-2xl" />
+                      ) : (
+                        <DashboardApp />
+                      )}
                   </Card>
               </div>
           </section>
@@ -313,7 +337,7 @@ function App() {
                               <h3 className={`font-bold text-xl lg:text-2xl transition-colors duration-300 ${activeFeatureIndex === index ? 'text-foreground' : 'text-muted-foreground/80'}`}>
                                 {feature.title}
                               </h3>
-                              <div className={`transition-all duration-500 ease-in-out overflow-hidden ${activeFeatureIndex === index ? 'max-h-40 opacity-100 mt-2' : 'max-h-0 opacity-0'}`}>
+                              <div className={`transition-[max-height,opacity,margin] duration-500 ease-in-out overflow-hidden ${activeFeatureIndex === index ? 'max-h-40 opacity-100 mt-2' : 'max-h-0 lg:max-h-40 opacity-0 lg:opacity-100'}`}>
                                 <p className="text-base lg:text-lg text-muted-foreground">{feature.description}</p>
                               </div>
                             </div>
