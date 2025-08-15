@@ -2,6 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import DashboardApp from '@/pages/dashboard/Index';
+import LightBeam from '@/components/LightBeam'; // Import the new SVG component
 
 // ==================================
 //      SVG VISUAL COMPONENTS (STICKY SCROLL)
@@ -141,7 +142,7 @@ const CompassIcon = (props) => (
     xmlns="http://www.w3.org/2000/svg"
     width="24"
     height="24"
-    viewBox="0 0 24 24"
+    viewBox="0 0 24"
     fill="none"
     stroke="currentColor"
     strokeWidth="2"
@@ -166,57 +167,40 @@ function App() {
   const [benefitTwoVisible, setBenefitTwoVisible] = useState(false);
   const benefitOneRef = useRef(null);
   const benefitTwoRef = useRef(null);
-  // State to track if the screen is small
   const [isSmallScreen, setIsSmallScreen] = useState(false);
 
+  // Effect for checking screen size
   useEffect(() => {
-    // Function to check screen size
     const checkScreenSize = () => {
-      // Set isSmallScreen to true if window width is less than 1024px
       setIsSmallScreen(window.innerWidth < 1024);
     };
-
-    // Check screen size on initial render
     checkScreenSize();
-
-    // Add event listener for window resize
     window.addEventListener('resize', checkScreenSize);
-
-    // Cleanup event listener on component unmount
     return () => window.removeEventListener('resize', checkScreenSize);
   }, []);
 
+  // Effect for intersection observers
   useEffect(() => {
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.5,
-    };
-
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.5 };
     const observerCallback = (entries, setter) => {
       entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setter(true);
-        }
+        if (entry.isIntersecting) setter(true);
       });
     };
-
     const observer1 = new IntersectionObserver(entries => observerCallback(entries, setBenefitOneVisible), observerOptions);
     const observer2 = new IntersectionObserver(entries => observerCallback(entries, setBenefitTwoVisible), observerOptions);
-
     if (benefitOneRef.current) observer1.observe(benefitOneRef.current);
     if (benefitTwoRef.current) observer2.observe(benefitTwoRef.current);
-
     return () => {
       if (benefitOneRef.current) observer1.unobserve(benefitOneRef.current);
       if (benefitTwoRef.current) observer2.unobserve(benefitTwoRef.current);
     };
   }, []);
 
+  // Effect for sticky scroll feature section
   useEffect(() => {
     const isLg = window.matchMedia('(min-width: 1024px)').matches;
     if (!isLg) return;
-
     const handleScroll = () => {
         const element = featureSectionRef.current;
         if (!element) return;
@@ -236,9 +220,9 @@ function App() {
   }, [activeFeatureIndex]);
 
   return (
-    <div className="bg-background text-foreground relative">
+    <div className="bg-background text-foreground relative min-h-screen">
+      <LightBeam />
       <div className="background-grid"></div>
-      <div className="background-glow"></div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <header className="flex justify-between items-center py-4">
           <h1 className="text-xl font-bold">Arc</h1>
@@ -254,23 +238,23 @@ function App() {
 
         <main className="mt-16 md:mt-24">
           <section id="hero" className="relative text-center lg:text-left pt-16 pb-24 sm:pt-24 sm:pb-32">
-              <div className="max-w-3xl mx-auto lg:mx-0">
-                  <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter">Finance for Founders Who'd Rather Be Building.</h2>
-                  <p className="mt-6 text-lg md:text-xl text-muted-foreground">Swap spreadsheet chaos for automated clarity. See your real-time revenue, cash flow, and runway in one place.</p>
-                  <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
-                      <Button size="lg" variant="primary">Get Started for Free</Button>
-                  </div>
-              </div>
-              <div className="mt-16 w-full">
-                  <Card className="w-full bg-transparent border border-border/10 rounded-2xl shadow-inner shadow-white/5">
-                      {/* Conditional rendering for the dashboard */}
-                      {isSmallScreen ? (
-                        <img src="/Dashboard.png" alt="Dashboard Preview" className="w-full h-auto rounded-2xl" />
-                      ) : (
-                        <DashboardApp />
-                      )}
-                  </Card>
-              </div>
+            <div className="max-w-3xl mx-auto lg:mx-0 relative z-10">
+                <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tighter">Finance for Founders Who'd Rather Be Building.</h2>
+                <p className="mt-6 text-lg md:text-xl text-muted-foreground">Swap spreadsheet chaos for automated clarity. See your real-time revenue, cash flow, and runway in one place.</p>
+                <div className="mt-8 flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4">
+                    <Button size="lg" variant="primary">Get Started for Free</Button>
+                </div>
+            </div>
+            <div className="mt-16 w-full relative z-10">
+                <Card className="relative overflow-hidden w-full bg-transparent border border-border/10 rounded-2xl shadow-inner shadow-white/5">
+                    {/* The dashboard-edge-glow div has been removed as the SVG handles the entire effect */}
+                    {isSmallScreen ? (
+                      <img src="/Dashboard.png" alt="Dashboard Preview" className="w-full h-auto rounded-2xl" />
+                    ) : (
+                      <DashboardApp />
+                    )}
+                </Card>
+            </div>
           </section>
           
           <section id="social-proof" className="mt-24 md:mt-32">

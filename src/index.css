@@ -39,21 +39,21 @@
   }
 }
 
+/* All previous beam/glow classes have been removed. The SVG component now handles the effect. */
+
+@layer utilities {
+  .will-change-transform { will-change: transform; }
+  .soft-blur { filter: blur(48px); }
+  .soft-blur-lg { filter: blur(72px); }
+}
+
 @layer components {
     .background-grid {
-        @apply absolute inset-0 -z-10 h-full w-full;
-        background-image: linear-gradient(to right, hsl(var(--border) / 0.1) 1px, transparent 1px), linear-gradient(to bottom, hsl(var(--border) / 0.1) 1px, transparent 1px);
-        background-size: 32px 32px;
-    }
-
-    .background-glow {
-        @apply absolute top-0 left-0 -z-10 h-full w-full;
-        background: radial-gradient(ellipse 80% 50% at 50% 0%, hsl(var(--primary) / 0.1), transparent);
-    }
-
-    .hero-glow {
-        @apply absolute top-0 left-1/2 -translate-x-1/2 w-[150%] h-[500px] -z-10;
-        background: radial-gradient(ellipse at 50% 0%, hsl(var(--primary) / 0.15) 0%, transparent 50%);
+      background-image: linear-gradient(to right, hsl(var(--border) / 0.05) 1px, transparent 1px),
+                        linear-gradient(to bottom, hsl(var(--border) / 0.05) 1px, transparent 1px);
+      position: absolute;
+      inset: 0;
+      z-index: 0;
     }
 
     .glass-pane {
@@ -148,35 +148,6 @@
     .card-darker {
         background-color: hsl(0 0% 8%);
         border-color: hsl(var(--border) / 0.5);
-    }
-
-    /* === FINAL HERO SECTION STYLES === */
-    .light-path {
-      @apply absolute top-0 left-0 w-full h-full pointer-events-none;
-      z-index: 0;
-    }
-    .light-path::before {
-      content: '';
-      @apply absolute top-[-200%] left-[-100%] w-[400%] h-[400%];
-      background-image: linear-gradient(
-        60deg,
-        transparent,
-        rgba(255, 255, 255, 0.05) 48%,
-        rgba(255, 255, 255, 0.08) 50%,
-        rgba(255, 255, 255, 0.05) 52%,
-        transparent
-      );
-      filter: blur(100px);
-      animation: lightSweep 20s ease-in-out infinite alternate;
-    }
-
-    @keyframes lightSweep {
-      from {
-        transform: translate(-25%, -25%);
-      }
-      to {
-        transform: translate(25%, 25%);
-      }
     }
 }
 
